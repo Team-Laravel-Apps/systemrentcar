@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -39,7 +38,7 @@
                 <div class="card-body">
                     <a type="button" data-toggle="modal" data-target=".add" class="btn btn-sm btn-success mb-3">Tambah Role Users <i class="bi bi-database-add"></i></a>
                     <div class="table-responsive">
-                        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -56,8 +55,12 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $data->nama_role }}</td>
                                     <td>
+                                        @if($data->id_role == '1')
+                                        <p class="mb-0" style="font-style: italic;">aksi dibatasi</p>
+                                        @else
                                         <a type="button" data-toggle="modal" data-target=".edit{{ $data->id_role ?? '' }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
                                         <a href="{{ route('delete.role', $data->id_role) }}" data-nama="{{ $data->nama_role }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -66,7 +69,7 @@
                                       <div class="modal-content">
                                         <div class="modal-body">
                                             <div class="d-flex justify-content-between mb-3">
-                                                <h5 class="modal-title" id="exampleModalLabel">Tambah Role Baru</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Ubah Role Baru</h5>
                                                 <button type="button" class="btn-close bg-transparent" data-dismiss="modal" aria-label="Close" style="border: none; color: red;"><i class="bi bi-x-lg"></i></button>
                                             </div>
                                             <form action="{{ route('update.role') }}" method="POST">

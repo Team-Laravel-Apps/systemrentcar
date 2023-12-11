@@ -35,28 +35,28 @@
                     <i class="bi bi-people-fill" style="font-size: 15px;"></i>
                     <span>Users</span>
                 </a>
-                <div id="collapseTwo" class="collapse {{ Route::is('role', 'users') ? 'show' : '' }}" aria-labelledby="headingTwo"
+                <div id="collapseTwo" class="collapse {{ Route::is('role', 'users', 'add.users', 'up.users') ? 'show' : '' }}" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Mater Users :</h6>
                         <a class="collapse-item {{ Route::is('role') ? 'active' : '' }}" href="{{ route('role') }}">Manajemen Roles</a>
-                        <a class="collapse-item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">Manajemen Users</a>
+                        <a class="collapse-item {{ Route::is('users', 'add.users', 'up.users') ? 'active' : '' }}" href="{{ route('users') }}">Manajemen Users</a>
                     </div>
                 </div>
             </li>
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#mastercar"
+                <a class="nav-link {{ Route::is('kategori') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#mastercar"
                     aria-expanded="true" aria-controls="mastercar">
                     <i class="bi bi-car-front-fill" style="font-size: 15px;"></i>
                     <span>Master Cars</span>
                 </a>
-                <div id="mastercar" class="collapse" aria-labelledby="headingUtilities"
+                <div id="mastercar" class="collapse {{ Route::is('kategori', 'add.kategori' ,'up.kategori') ? 'show' : '' }}" aria-labelledby="headingUtilities"
                     data-parent="#mastercar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Cars:</h6>
-                        <a class="collapse-item" href="#">Kategori Kendaraan</a>
+                        <a class="collapse-item {{ Route::is('kategori', 'add.kategori','up.kategori') ? 'active' : '' }}" href="{{ route('kategori') }}">Kategori Kendaraan</a>
                         <a class="collapse-item" href="#">Data Kendaraan</a>
                     </div>
                 </div>

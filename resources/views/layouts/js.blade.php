@@ -20,4 +20,25 @@
     <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo/datatables-demo.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Kode JavaScript Anda disini
+            var fileInput = document.getElementById("fileInput");
+            var imagePreview = document.getElementById("previewImage");
+
+            fileInput.addEventListener("change", function() {
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    imagePreview.src = "drive/profile/undraw_profile.svg";
+                }
+            });
+        });
+    </script>
     @include('sweetalert::alert')

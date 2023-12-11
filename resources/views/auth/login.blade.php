@@ -76,7 +76,7 @@
                                     <form class="user" action="{{ route('posts.login') }}" method="POST">
                                         <div class="form-group">
                                             @csrf
-                                            <input type="username" name="username" class="form-control p-3 @error('username') is-invalid @enderror" placeholder="Username" autocomplete="off">
+                                            <input type="username" name="username" class="form-control p-3 @error('username') is-invalid @enderror" placeholder="Username" autocomplete="off" value="{{ old('username') }}">
                                             @error('username')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -99,7 +99,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-info btn-block p-2">
+                                        <button type="submit" class="btn btn-block p-2 text-white" style="background: rgb(2, 124, 93);">
                                             Login
                                         </button>
                                     </form>

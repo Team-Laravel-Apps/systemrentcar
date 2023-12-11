@@ -31,7 +31,7 @@ class RoleController extends Controller
 
 
         if ($validator->fails()) {
-            Alert::warning('Oopss', 'Aksi profil paket gagal dilakukan');
+            Alert::warning('Oopss', 'Aksi role gagal dilakukan');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -52,6 +52,7 @@ class RoleController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all())
         $validator = Validator::make($request->all(), [
             'nama_role' => 'unique:roles,nama_role,' . ($request['id_role'] ?? '') . ',id_role',
         ], [
@@ -59,12 +60,12 @@ class RoleController extends Controller
         ]);
 
         if ($validator->fails()) {
-            Alert::warning('Oopss', 'Aksi profil paket gagal dilakukan');
+            Alert::warning('Oopss', 'Aksi role gagal dilakukan');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
 
-        $set = Role::updateOrCreate(['id_role' => $request['id_role']], [
+        $set = Role::where('id_role', $request['id_role'])->update([
             'nama_role' => $request['nama_role'] == '' ? '' : $request['nama_role'],
         ]);
 
