@@ -7,7 +7,14 @@
     <form action="{{ route('posts.users') }}" method="POST" class="row" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-12 mb-3">
-            <h1 class="h3 text-capitalize">{{$aksi}} <i class="bi bi-person-plus"></i></h1>
+            <h1 class="h3 text-capitalize">
+                @if(Route::is('up.profile'))
+                    Update Profile
+                @else
+                {{$aksi}}
+                @endif
+                <i class="bi bi-person-plus"></i>
+            </h1>
         </div>
 
         <div class="col-12 col-lg-6 mb-4">
@@ -92,7 +99,7 @@
                         <div class="col-lg-6 col-sm-12 mb-0">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" name="password" class="form-control @error ('password') is-invalid @enderror" placeholder="**********" value="{{ old('password') }}">
+                                <input type="password" name="password" class="form-control @error ('password') is-invalid @enderror" placeholder="**********" value="{{ old('password') }}" autocomplete="off">
                                 @error('password')
                                     <small class="form-text text-danger">
                                         {{ $message }}
@@ -138,7 +145,7 @@
 
                         <div class="col-lg-12">
                             <a href="{{ route('users') }}" class="btn btn-danger">Kembali <i class="bi bi-x-circle-fill"></i></a>
-                            <button type="submit" class="btn btn-info">Simpan <i class="bi bi-check-circle-fill"></i></button>
+                            <button type="submit" class="btn btn-primary">Simpan <i class="bi bi-check-circle-fill"></i></button>
                         </div>
                     </div>
 

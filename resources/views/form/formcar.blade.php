@@ -35,11 +35,11 @@
                                             <label for="upload-input" class="upload-button">
                                                 <i class="bi bi-camera mr-1"></i> Upload
                                             </label>
-                                            <input type="file" id="upload-input" name="icon" accept="image/*" class="@error ('icon') is-invalid @enderror">
+                                            <input type="file" id="upload-input" name="thumbnail" accept="image/*" class="@error ('icon') is-invalid @enderror">
                                         </div>
                                     </div>
                                 </div>
-                                @error('icon')
+                                @error('thumbnail')
                                     <small class="form-text text-danger">
                                         {{ $message }}
                                     </small>

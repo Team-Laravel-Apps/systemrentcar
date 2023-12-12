@@ -26,6 +26,7 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
+    Route::get("/profile/{id}", [UsersController::class, "update"])->name("up.profile");
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
     Route::get("/role-users", [RoleController::class, "index"])->name("role");
 
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get("/data-kendaraan", [CarController::class, "index"])->name("mobil");
     Route::get("/data-kendaraan/add", [CarController::class, "create"])->name("add.mobil");
+    Route::get("/data-kendaraan/up/{id}", [CarController::class, "update"])->name("up.mobil");
 });
 
 

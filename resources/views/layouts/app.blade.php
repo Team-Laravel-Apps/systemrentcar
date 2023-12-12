@@ -1,6 +1,7 @@
 @inject('carbon', 'Carbon\Carbon')
 @php
-    $today = Illuminate\Support\Carbon::now()->isoFormat('dddd, D MMMM Y')
+    $today          = Illuminate\Support\Carbon::now()->isoFormat('dddd, D MMMM Y');
+    $usersprofile   = asset('drive/profile/' . ( auth()->user()->profile ?? 'profile.png' ));
 @endphp
 @include('layouts.css')
 <body id="page-top">
@@ -165,12 +166,12 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->username }}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{ asset('assets/img/undraw_profile.svg') }}">
+                                    src="{{ $usersprofile }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('up.profile', auth()->user()->id) }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

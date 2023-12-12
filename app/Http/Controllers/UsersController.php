@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Route;
 
 use App\Models\Role;
 use App\Models\User;
@@ -16,7 +17,11 @@ class UsersController extends Controller
     {
         $data = [
             'user' => User::join('roles', 'roles.id_role', '=', 'users.id_role')
-            ->where('users.id', '!=', auth()->user()->id)->get(),
+            ->where('users.id', '!=', auth()->user()->id)
+            ->get(),
+
+            'count' => User::join('roles', 'roles.id_role', '=', 'users.id_role')->get(),
+
             'role' => Role::all(),
         ];
 
@@ -53,7 +58,7 @@ class UsersController extends Controller
             'profile'         => 'file|mimes:jpeg,bmp,png,gif|max:2000',
             'no_telpon'       => 'required',
             'alamat'          => 'required',
-            'password'        => 'required',
+            'password'        => ($request->aksi == 'Update users' ? 'nullable' : 'required'),
             'id_role'         => 'required',
         ], [
             'nama.required'         => 'Nama tidak boleh kosong!',
@@ -76,19 +81,35 @@ class UsersController extends Controller
         }
 
         $gambar = User::where('id', $request->id)->first();
-        $file   = $request['profile'];
 
-        if ($file && $file->isValid()) {
-            $files = $file->hashName();
-            if($gambar->profile == null)
-            {
-                $file->move('drive/profile', $files);
-            }else{
-                unlink('drive/profile' .'/'. $gambar->profile);
-                $file->move('drive/profile', $files);
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+
+            if ($file->isValid()) {
+                $files = $file->hashName();
+
+                // File Handling
+                if ($request->aksi == 'Tambah users' || $gambar->profile == null) {
+                    $file->move(public_path('drive/profile'), $files);
+                } else {
+                    // Delete old icon file
+                    unlink(public_path('drive/profile') . '/' . $gambar->profile);
+                    $file->move(public_path('drive/profile'), $files);
+                }
+            } else {
+                // Handle invalid file
+                if($request->aksi == "Tambah users"){
+                    $files = null;
+                }else{
+                    $files = $gambar->profile ?? null;
+                }
             }
-        }else{
-            $files = null;
+        } else {
+            if($request->aksi == "Tambah users"){
+                $files = null;
+            }else{
+                $files = $gambar->profile ?? null;
+            }
         }
 
         $set = User::updateOrCreate(['id' => $request['id']], [
@@ -104,7 +125,11 @@ class UsersController extends Controller
 
         if ($set) {
             Alert::success('Berhasil', $request->aksi.' berhasil dilakukan');
-            return redirect()->route('users');
+            if ($request->aksi = 'Update users') {
+                return redirect()->back();
+            } else {
+                return redirect()->route('users');
+            }
         } else {
             Alert::error('Gagal', $request->aksi.' gagal dilakukan');
             return redirect()->back();

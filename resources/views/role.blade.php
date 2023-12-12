@@ -84,8 +84,8 @@
                                                     </div>
                                                     @enderror
                                                 </div>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-success">Simpan</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <i class="bi bi-x-circle-fill"></i></button>
+                                                <button type="submit" class="btn btn-primary">Simpan <i class="bi bi-check-circle-fill"></i></button>
                                             </form>
                                         </div>
                                       </div>
@@ -122,8 +122,8 @@
                     </div>
                     @enderror
                 </div>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Simpan</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <i class="bi bi-x-circle-fill"></i></button>
+                <button type="submit" class="btn btn-primary">Simpan <i class="bi bi-check-circle-fill"></i></button>
             </form>
         </div>
       </div>

@@ -22,7 +22,7 @@
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Jumlah Users
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $user->count() }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $count->count() }}</div>
                         </div>
 
                     </div>
@@ -64,10 +64,11 @@
                                         <td>{{ $data->no_telpon }}</td>
                                         <td class="col-3">{{ $data->alamat }}</td>
                                         <td class="col-2">
-                                            <a href="{{ route('up.users', $data->id) }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
                                             @if(auth()->user()->id_role != '1')
+                                            <p class="mb-0" style="font-style: italic;">aksi dibatasi</p>
                                             @else
                                             <a href="{{ route('delete.users', $data->id) }}" data-nama="{{ $data->nama }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
+                                            <a href="{{ route('up.users', $data->id) }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</a>
                                             @endif
                                         </td>
                                     </tr>
