@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-people-fill" style="font-size: 40px; color: rgb(2, 124, 93);"></i>
+                            <i class="bi bi-people-fill" style="font-size: 40px; color: rgb(2, 59, 124);"></i>
                         </div>
 
                         <div class="col">
@@ -37,7 +37,7 @@
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <a href="{{ route('add.users') }}" class="btn btn-sm btn-success mb-3">Tambah Users <i class="bi bi-database-add"></i></a>
+                    <a href="{{ route('add.users') }}" class="btn btn-sm mb-3 text-white" style="background-color: rgb(2, 59, 124);">Tambah Users <i class="bi bi-database-add"></i></a>
                     <div class="table-responsive">
                         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>

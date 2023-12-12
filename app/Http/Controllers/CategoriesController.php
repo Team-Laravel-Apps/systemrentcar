@@ -115,7 +115,6 @@ class CategoriesController extends Controller
             return redirect()->back();
         }
     }
-
     public function delete(Request $request, $id_category)
     {
         $cek = Category::where('id_category',  $id_category)->first();

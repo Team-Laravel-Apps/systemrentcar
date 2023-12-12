@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-car-front-fill" style="font-size: 40px; color: rgb(2, 124, 93);"></i>
+                            <i class="bi bi-car-front-fill" style="font-size: 40px; color: rgb(2, 59, 124);"></i>
                         </div>
 
                         <div class="col">
@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-person-standing" style="font-size: 40px; color: rgb(2, 124, 93);"></i>
+                            <i class="bi bi-person-standing" style="font-size: 40px; color: rgb(2, 59, 124);"></i>
                         </div>
 
                         <div class="col">
@@ -55,7 +55,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-cash-stack" style="font-size: 40px; color: rgb(2, 124, 93);"></i>
+                            <i class="bi bi-cash-stack" style="font-size: 40px; color: rgb(2, 59, 124);"></i>
                         </div>
 
                         <div class="col">

@@ -6,7 +6,7 @@
 <body id="page-top">
 
     <div id="wrapper">
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: rgb(2, 124, 93);">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: rgb(2, 59, 124);">
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
                 <div class="sidebar-brand-icon">
@@ -15,7 +15,6 @@
                 <div class="sidebar-brand-text mx-2">SiRentCar</div>
             </a>
 
-            <hr class="sidebar-divider my-0">
 
             <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}">
@@ -23,13 +22,12 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <hr class="sidebar-divider">
 
-            <div class="sidebar-heading">
+            <div class="sidebar-heading pt-3">
                 Master Data
             </div>
 
-            <li class="nav-item">
+            <li class="nav-item pb-0">
                 <a class="nav-link {{ Route::is('role', 'users') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="bi bi-people-fill" style="font-size: 15px;"></i>
@@ -47,17 +45,17 @@
 
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('kategori') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#mastercar"
+                <a class="nav-link {{ Route::is('kategori', 'add.kategori' ,'up.kategori', 'mobil', 'add.mobil','up.mobil') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#mastercar"
                     aria-expanded="true" aria-controls="mastercar">
                     <i class="bi bi-car-front-fill" style="font-size: 15px;"></i>
                     <span>Master Cars</span>
                 </a>
-                <div id="mastercar" class="collapse {{ Route::is('kategori', 'add.kategori' ,'up.kategori') ? 'show' : '' }}" aria-labelledby="headingUtilities"
+                <div id="mastercar" class="collapse {{ Route::is('kategori', 'add.kategori' ,'up.kategori', 'mobil', 'add.mobil','up.mobil') ? 'show' : '' }}" aria-labelledby="headingUtilities"
                     data-parent="#mastercar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Cars:</h6>
                         <a class="collapse-item {{ Route::is('kategori', 'add.kategori','up.kategori') ? 'active' : '' }}" href="{{ route('kategori') }}">Kategori Kendaraan</a>
-                        <a class="collapse-item" href="#">Data Kendaraan</a>
+                        <a class="collapse-item {{ Route::is('mobil', 'add.mobil','up.mobil') ? 'active' : '' }}" href="{{ route('mobil') }}">Data Kendaraan</a>
                     </div>
                 </div>
             </li>
@@ -69,11 +67,8 @@
                 </a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading pt-3">
                 Data Transaksi
             </div>
 
@@ -106,9 +101,6 @@
                     <i class="bi bi-receipt"></i>
                     <span>Invoice Pelanggan</span></a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

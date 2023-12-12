@@ -74,6 +74,26 @@
             opacity: 1;
         }
 
+        .thumbnail-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* border-radius: 50%; */
+            border: 1px solid rgb(194, 194, 194);
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-container:hover .overlay {
+            opacity: 1;
+        }
+
+
         .overlay {
             position: absolute;
             top: 0;

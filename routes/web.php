@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
@@ -36,6 +37,9 @@ Route::middleware('auth')->group(function(){
     Route::get("/kategori", [CategoriesController::class, "index"])->name("kategori");
     Route::get("/kategori/add", [CategoriesController::class, "create"])->name("add.kategori");
     Route::get("/kategori/up/{id_category}", [CategoriesController::class, "update"])->name("up.kategori");
+
+    Route::get("/data-kendaraan", [CarController::class, "index"])->name("mobil");
+    Route::get("/data-kendaraan/add", [CarController::class, "create"])->name("add.mobil");
 });
 
 
@@ -59,3 +63,4 @@ Route::get('kategori/delete/{id_category}', [CategoriesController::class, 'delet
 //Post and Update
 Route::post("users/post", [UsersController::class, "posts"])->name('posts.users');
 Route::post("kategori/post", [CategoriesController::class, "posts"])->name('posts.kategori');
+Route::post("cars/post", [CarController::class, "posts"])->name('posts.car');
