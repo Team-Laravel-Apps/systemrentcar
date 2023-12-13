@@ -36,7 +36,7 @@
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <a type="button" data-toggle="modal" data-target=".add" class="btn btn-sm mb-3 text-white" style="background-color: rgb(2, 59, 124);">Tambah Role Users <i class="bi bi-database-add"></i></a>
+                    <a type="button" data-toggle="modal" data-target=".add" class="btn mb-3 text-white" style="background-color: rgb(2, 59, 124);">Tambah Role Users <i class="bi bi-database-add"></i></a>
                     <div class="table-responsive">
                         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>

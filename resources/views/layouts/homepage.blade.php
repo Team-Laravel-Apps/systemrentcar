@@ -10,15 +10,22 @@
 </head>
 
 <body>
+    <div class="col-lg-12 p-2" style="background: rgb(2, 59, 124);">
+        <div class="text-white d-flex justify-content-between container">
+            <small class="mb-0"><i class="bi bi-phone"></i> 089827351127</small>
+            <small class="mb-0">Rental Terbaik di Bali <i class="bi bi-car-front-fill"></i></small>
+            <small class="mb-0"><i class="bi bi-inboxes-fill"></i> Pesan sekarang</small>
+        </div>
+    </div>
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white p-4 shadow">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}" style="color: rgb(2, 59, 124);"><i
                     class="bi bi-car-front-fill"></i> SiRentCar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmenu"
+                aria-controls="navbarmenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse" id="navbarmenu">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="#">Beranda</a>
                     <a class="nav-link" href="#">Produk Kami</a>
@@ -65,10 +72,15 @@
                 </ul>
             </div>
             <div class="col-lg-4 col-6">
-                <h5>About</h5>
+                <h5>Jam Operasi</h5>
                 <ul class="list-unstyled text-small">
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Kontak Kami</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Blog</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Senin 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Selasa 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Rabu 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Kamis 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Jumat 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Sabtu 09.00 - 13.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Minggu Tidak Buka</a></li>
                 </ul>
             </div>
             <div class="col-lg-4 col-6">

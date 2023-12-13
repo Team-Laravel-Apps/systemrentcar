@@ -49,6 +49,8 @@ class CarController extends Controller
             'id_category'       => 'required',
             'biaya_sewa'        => 'required',
             'unit'              => 'required',
+            'transmisi'         => 'required',
+            'kapasitas'         => 'required',
             'description'       => 'required',
         ], [
             'thumbnail.file'        => 'Masukan Gambar sesuai format: jpeg, bmp, png, gif!',
@@ -59,6 +61,8 @@ class CarController extends Controller
             'biaya_sewa.required'   => 'Input tidak boleh kosong',
             'unit.required'         => 'Input tidak boleh kosong',
             'description.required'  => 'Input tidak boleh kosong',
+            'transmisi.required'    => 'Input tidak boleh kosong',
+            'kapasitas.required'    => 'Input tidak boleh kosong',
         ]);
 
 
@@ -107,6 +111,8 @@ class CarController extends Controller
             'nama_kendaraan'    => $request['nama_kendaraan'] == '' ? null : $request['nama_kendaraan'],
             'biaya_sewa'        => $request['biaya_sewa'] == '' ? null : $request['biaya_sewa'],
             'unit'              => $request['unit'] == '' ? null : $request['unit'],
+            'transmisi'         => $request['transmisi'] == '' ? null : $request['transmisi'],
+            'kapasitas'         => $request['kapasitas'] == '' ? null : $request['kapasitas'],
             'description'       => $request['description'] == '' ? null : $request['description'],
             'status_car'        => $request['status_car'] == '' ? 'tersedia' : $request['status_car'],
         ]);

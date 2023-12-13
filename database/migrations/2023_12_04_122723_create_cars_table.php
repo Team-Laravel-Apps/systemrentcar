@@ -18,6 +18,8 @@ class CreateCarsTable extends Migration
             $table->string('id_car');
             $table->string('id_category');
             $table->string('nama_kendaraan');
+            $table->string('transmisi');
+            $table->string('kapasitas');
             $table->string('img_kendaraan');
             $table->string('biaya_sewa');
             $table->integer('unit');

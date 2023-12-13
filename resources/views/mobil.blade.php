@@ -36,7 +36,7 @@
         <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <a href="{{ route('add.mobil') }}" class="btn btn-sm mb-3 text-white" style="background-color: rgb(2, 59, 124);">Tambah Kategori <i class="bi bi-database-add"></i></a>
+                    <a href="{{ route('add.mobil') }}" class="btn mb-3 text-white" style="background-color: rgb(2, 59, 124);">Tambah Kendaraan <i class="bi bi-database-add"></i></a>
                     <div class="table-responsive">
                         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>

@@ -59,7 +59,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-sm-12 mb-2">
+                        <div class="col-lg-6 col-sm-12 mb-2">
                             <div class="form-group">
                                 <label>Kategori Kendaraan</label>
                                 <select name="id_category" class="select form-control @error ('id_category') is-invalid @enderror">
@@ -79,7 +79,27 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-8 col-sm-12 mb-2">
+                        <div class="col-lg-6 col-sm-12 mb-2">
+                            <div class="form-group">
+                                <label>Transmisi</label>
+                                <select name="transmisi" class="select form-control @error ('transmisi') is-invalid @enderror">
+                                    @php
+                                        $selectTransmisi = $car['transmisi'] ?? old('transmisi');
+                                    @endphp
+                                    <option selected disabled>Pilih transmisi kendaraan..</option>
+                                    <option value="manual" {{ $selectTransmisi == 'manual' ? 'selected' : '' }}>Manual</option>
+                                    <option value="matic" {{ $selectTransmisi == 'matic' ? 'selected' : '' }}>Matic</option>
+                                    <option value="manual/matic" {{ $selectTransmisi == 'manual/matic' ? 'selected' : '' }}>Manual/Matic</option>
+                                </select>
+                                @error('id_category')
+                                    <small class="form-text text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 mb-2">
                             <div class="form-group">
                                 <label>Biaya sewa (1 hari)</label>
                                 <input type="number" name="biaya_sewa" min="0" class="form-control @error ('biaya_sewa') is-invalid @enderror" placeholder="Rp." value="{{ $car->biaya_sewa ?? old('biaya_sewa') }}">
@@ -91,11 +111,23 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-12 mb-2">
+                        <div class="col-lg-3 col-sm-12 mb-2">
                             <div class="form-group">
                                 <label>Unit Tersedia</label>
                                 <input type="number" name="unit" min="0" class="form-control @error ('unit') is-invalid @enderror" placeholder="0" value="{{ $car->unit ?? old('unit') }}">
                                 @error('unit')
+                                    <small class="form-text text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-12 mb-2">
+                            <div class="form-group">
+                                <label>Kapasitas</label>
+                                <input type="number" name="kapasitas" min="0" class="form-control @error ('kapasitas') is-invalid @enderror" placeholder="0" value="{{ $car->kapasitas ?? old('kapasitas') }}">
+                                @error('kapasitas')
                                     <small class="form-text text-danger">
                                         {{ $message }}
                                     </small>

@@ -13,6 +13,8 @@ class Cars extends Model
         'id_car',
         'id_category',
         'nama_kendaraan',
+        'transmisi',
+        'kapasitas',
         'img_kendaraan',
         'biaya_sewa',
         'unit',
