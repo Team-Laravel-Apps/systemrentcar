@@ -27,7 +27,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarmenu">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Beranda</a>
+                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Beranda</a>
                     <a class="nav-link" href="#">Produk Kami</a>
                     <a class="nav-link" href="#">Blog</a>
                     <a class="nav-link" href="#">Kontak Kami</a>
@@ -43,10 +43,33 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{-- route('register') --}}">
+                        <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{ route('register') }}">
                             <i class="bi bi-box-arrow-in-right"></i> {{ __('Register') }}</a>
                     </li>
                     @endguest
+
+                    @auth
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" type="button" id="usersmenu"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->nama }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="usersmenu">
+                            <li>
+                                <a class="dropdown-item" href="#">Profil</a>
+                                <a class="dropdown-item" href="#">Riwayat Penyewaan</a>
+                                <a class="dropdown-item text-danger" href="{{ route('posts.logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }} <i class="bi bi-box-arrow-right"></i>
+                                </a>
+                                <form id="logout-form" action="{{ route('posts.logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -74,31 +97,38 @@
             <div class="col-lg-4 col-6">
                 <h5>Jam Operasi</h5>
                 <ul class="list-unstyled text-small">
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Senin 09.00 - 18.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Selasa 09.00 - 18.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Rabu 09.00 - 18.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Kamis 09.00 - 18.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Jumat 09.00 - 18.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Sabtu 09.00 - 13.00 WITA</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i> Minggu Tidak Buka</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Senin 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Selasa 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Rabu 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Kamis 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Jumat 09.00 - 18.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Sabtu 09.00 - 13.00 WITA</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
+                            Minggu Tidak Buka</a></li>
                 </ul>
             </div>
             <div class="col-lg-4 col-6">
                 <h5>Social Media</h5>
                 <ul class="list-unstyled text-small">
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-instagram"></i> Instagram</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-facebook"></i> Facebook</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-whatsapp"></i> WhatsAap</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-tiktok"></i> TikTok</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i
+                                class="bi bi-instagram"></i> Instagram</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i
+                                class="bi bi-facebook"></i> Facebook</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i
+                                class="bi bi-whatsapp"></i> WhatsAap</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i
+                                class="bi bi-tiktok"></i> TikTok</a></li>
                 </ul>
             </div>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js">
     </script>
     @include('sweetalert::alert')
 </body>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
@@ -23,9 +24,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function(){
-    Route::get("/", [IndexController::class, "index"])->name("home");
+    //page
     Route::get("/login", [LoginController::class, "index"])->name("login");
+    Route::get("/register", [RegisterController::class, "index"])->name("register");
+
+    //action
     Route::post("login/post", [LoginController::class, "posts"])->name('posts.login');
+    Route::post("register/post", [RegisterController::class, "posts"])->name('posts.register');
 });
 
 Route::middleware('auth')->group(function(){
@@ -71,3 +76,9 @@ Route::get('kategori/delete/{id_category}', [CategoriesController::class, 'delet
 Route::post("users/post", [UsersController::class, "posts"])->name('posts.users');
 Route::post("kategori/post", [CategoriesController::class, "posts"])->name('posts.kategori');
 Route::post("cars/post", [CarController::class, "posts"])->name('posts.car');
+
+
+
+// Pelanggan
+Route::get("/", [IndexController::class, "index"])->name("home");
+

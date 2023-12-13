@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login App</title>
+    <title>Register App</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -85,7 +85,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{route('register') }}">
+                            <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{ route('register') }}">
                                 <i class="bi bi-box-arrow-in-right"></i> {{ __('Register') }}</a>
                         </li>
                     @endguest
@@ -105,41 +105,79 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block " style="background-image: url('assets/img/bg-login.jpg'); background-size: cover; background-position: left;"></div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-5 d-none d-lg-block " style="background-image: url('assets/img/bg-login.jpg'); background-size: cover; background-position: left;"></div>
+                            <div class="col-lg-7">
                                 <div class="p-5 mb-5">
 
                                     <div class="text-center mb-3 mt-5">
-                                        <h5 class="h3 text-gray-900 mb-2 mt-2">Login SiRentCar</h5>
-                                        <p>Selamat datang di system SiRentCar</p>
+                                        <h5 class="h3 text-gray-900 mb-2 mt-2">Register SiRentCar</h5>
+                                        <p>Lakukan register untuk jelajihi SiRentCar</p>
                                     </div>
 
-                                    <form class="user" action="{{ route('posts.login') }}" method="POST">
-                                        <div class="form-group">
-                                            @csrf
-                                            <input type="username" name="username" class="form-control p-3 @error('username') is-invalid @enderror" placeholder="Username" autocomplete="off" value="{{ old('username') }}">
-                                            @error('username')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
+                                    <form class="user" action="{{ route('posts.register') }}" method="POST">
+                                        <input type="hidden" name="aksi" value="Register">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    @csrf
+                                                    <input type="text" name="nama" class="form-control p-3 @error('nama') is-invalid @enderror" placeholder="Nama anda" autocomplete="off" value="{{ old('nama') }}">
+                                                    @error('nama')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
                                                 </div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            @csrf
-                                            <input type="password" name="password" class="form-control p-3 @error('password') is-invalid @enderror" placeholder="Password">
-                                            @error('password')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
                                             </div>
-                                        @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    @csrf
+                                                    <input type="email" name="email" class="form-control p-3 @error('email') is-invalid @enderror" placeholder="Email anda" autocomplete="off" value="{{ old('nama') }}">
+                                                    @error('email')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    @csrf
+                                                    <input type="number" name="no_telpon" class="form-control p-3 @error('no_telpon') is-invalid @enderror" placeholder="0xxxxxx" autocomplete="off" value="{{ old('no_telpon') }}">
+                                                    @error('no_telpon')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    @csrf
+                                                    <input type="username" name="username" class="form-control p-3 @error('username') is-invalid @enderror" placeholder="Username" autocomplete="off" value="{{ old('username') }}">
+                                                    @error('username')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    @csrf
+                                                    <input type="password" name="password" class="form-control p-3 @error('password') is-invalid @enderror" placeholder="Password">
+                                                    @error('password')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
+
                                         <button type="submit" class="btn btn-block p-2 text-white" style="background: rgb(2, 59, 124);">
                                             Login
                                         </button>
@@ -147,10 +185,7 @@
 
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small text-dark" href="#">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <small class="text-dark">Belum punya akun?, </small><a class="small text-primary" href="{{ route('register') }}">Register kuy</a>
+                                        <small class="text-dark">Sudah punya akun?, </small><a class="small text-primary" href="{{ route('login') }}">Login kuy</a>
                                     </div>
                                 </div>
                             </div>

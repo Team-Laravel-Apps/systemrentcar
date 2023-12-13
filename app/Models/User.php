@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'ktp',
         'nik',
+        'gender',
     ];
 
     /**
