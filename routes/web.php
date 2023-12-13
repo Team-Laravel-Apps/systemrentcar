@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Hompage\IndexController;
+use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('guest')->group(function(){
-    Route::get("/", [LoginController::class, "index"])->name("login");
+    Route::get("/", [IndexController::class, "index"])->name("home");
+    Route::get("/login", [LoginController::class, "index"])->name("login");
     Route::post("login/post", [LoginController::class, "posts"])->name('posts.login');
 });
 
@@ -42,6 +45,8 @@ Route::middleware('auth')->group(function(){
     Route::get("/data-kendaraan", [CarController::class, "index"])->name("mobil");
     Route::get("/data-kendaraan/add", [CarController::class, "create"])->name("add.mobil");
     Route::get("/data-kendaraan/up/{id}", [CarController::class, "update"])->name("up.mobil");
+
+    Route::get("/pelanggan", [PelangganController::class, "index"])->name("pelanggan");
 });
 
 

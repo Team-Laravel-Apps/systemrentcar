@@ -22,7 +22,7 @@
                             </ul>
                         </div>
 
-                        <input type="hidden" name="id_car" value="{{ $car->id_car ?? '' }}">
+                        <input type="hidden" name="id" value="{{ $car->id ?? '' }}">
                         <input type="hidden" name="aksi" value="{{ $aksi }}">
 
                         <div class="col-lg-12 col-sm-12 mb-2">
@@ -131,7 +131,7 @@
                         </div>
 
                         <div class="col-lg-12">
-                            <a href="{{ route('kategori') }}" class="btn btn-danger">Kembali <i class="bi bi-x-circle-fill"></i></a>
+                            <a href="{{ route('mobil') }}" class="btn btn-danger">Kembali <i class="bi bi-x-circle-fill"></i></a>
                             <button type="submit" class="btn btn-info">Simpan <i class="bi bi-check-circle-fill"></i></button>
                         </div>
                     </div>

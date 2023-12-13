@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>RENTCARME</title>
+    <title>SiRentCar</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -57,8 +57,7 @@
 
         .icon-kategori-container {
             position: relative;
-            width: 150px;
-            height: 150px;
+            width: 100%;
             overflow: hidden;
             /* border-radius: 50%; */
             border: 1px solid rgb(194, 194, 194);

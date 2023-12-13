@@ -14,7 +14,7 @@ class RoleController extends Controller
     public function index()
     {
         $data = [
-            'role' => Role::all()
+            'role' => Role::where('roles.nama_role', '!=', 'Pelanggan')->get(),
         ];
 
         return view('role', $data);

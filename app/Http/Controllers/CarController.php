@@ -44,7 +44,7 @@ class CarController extends Controller
     public function posts(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'thumbnail'         => 'required|file|mimes:jpeg,bmp,png,gif|max:2000',
+            'thumbnail'         => ($request->aksi == 'Update Kendaraan' ? 'nullable' : 'required|file|mimes:jpeg,bmp,png,gif|max:2000'),
             'nama_kendaraan'    => 'required',
             'id_category'       => 'required',
             'biaya_sewa'        => 'required',

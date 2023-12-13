@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Route;
 
 use App\Models\Role;
 use App\Models\User;
@@ -32,7 +31,7 @@ class UsersController extends Controller
     {
         $data = [
             'aksi' => 'Tambah users',
-            'role' => Role::all(),
+            'role' => Role::where('roles.nama_role', '!=', 'Pelanggan')->get(),
         ];
 
         return view('form.formusers', $data);
@@ -42,7 +41,7 @@ class UsersController extends Controller
     {
         $data = [
             'aksi' => 'Update users',
-            'role' => Role::all(),
+            'role' => Role::where('roles.nama_role', '!=', 'Pelanggan')->get(),
             'users' => User::find($id)
         ];
 

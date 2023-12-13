@@ -61,8 +61,8 @@
                 </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <li class="nav-item {{ Route::is('pelanggan', 'add.pelanggan','up.pelanggan') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('pelanggan') }}">
                     <i class="bi bi-person-check" style="font-size: 15px;"></i>
                     <span>Profile Customer</span>
                 </a>

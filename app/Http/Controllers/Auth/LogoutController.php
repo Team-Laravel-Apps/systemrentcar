@@ -12,6 +12,6 @@ class LogoutController extends Controller
     {
         auth()->logout();
         Alert::success('Logout', 'Anda berhasil logout dari sistem');
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }
