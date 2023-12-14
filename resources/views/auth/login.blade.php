@@ -1,3 +1,4 @@
+@section('title', 'Login')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +7,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Website penyedia layanan penyewaan mobil online di bali">
+    <meta name="author" content="Aisyah">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/icon.gif') }}" />
 
     <title>Login App</title>
 
@@ -48,52 +50,60 @@
         }
 
         /* The rest of your styles go here */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #fff;
+        }
+        .preloader .loading {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            font: 14px arial;
+        }
 
+        .custom-search {
+            position: relative;
+        }
+
+        .custom-search input {
+            padding-right: 30px;
+            border-radius: 24px;
+            font-size: 15px;
+        }
+
+        .custom-search .input-group-text {
+            background: none;
+            border: none;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Tambahkan transisi warna untuk efek yang halus */
+        }
+
+        .custom-search input:focus + .input-group-text,
+        .custom-search input:not(:placeholder-shown) + .input-group-text {
+            color: #000; /* Ganti dengan warna yang diinginkan saat input aktif atau terisi */
+        }
     </style>
 </head>
 
 <body>
-    <div class="col-lg-12 p-2" style="background: rgb(2, 59, 124);">
-        <div class="text-white d-flex justify-content-between container">
-            <small class="mb-0"><i class="bi bi-phone"></i> 089827351127</small>
-            <small class="mb-0">Rental Terbaik di Bali <i class="bi bi-car-front-fill"></i></small>
-            <small class="mb-0"><i class="bi bi-inboxes-fill"></i> Pesan sekarang</small>
+    <div class="preloader">
+        <div class="loading">
+          <img src="{{URL::to('assets/img/loader.gif')}}" width="300">
         </div>
     </div>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white p-4 shadow">
-        <div class="container-fluid mx-4">
-            <a class="navbar-brand" href="{{ route('home') }}" style="color: rgb(2, 59, 124);;"><i class="bi bi-car-front-fill"></i> SiRentCar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Beranda</a>
-                    <a class="nav-link" href="#">Produk Kami</a>
-                    <a class="nav-link" href="#">Blog</a>
-                    <a class="nav-link" href="#">Kontak Kami</a>
-                </div>
-            </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary btn-sm text-white px-3 mr-2" href="{{ route('login') }}">
-                                <i class="bi bi-person-circle"></i> {{ __('Login') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{route('register') }}">
-                                <i class="bi bi-box-arrow-in-right"></i> {{ __('Register') }}</a>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    @include('auth.navbar')
 
     <div class="container">
         <!-- Outer Row -->
@@ -161,8 +171,9 @@
             </div>
 
         </div>
-
     </div>
+
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script>
@@ -173,6 +184,11 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('assets/js/sb-admin-2.min.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+          $(".preloader").fadeOut();
+        })
+    </script>
     @include('sweetalert::alert')
 </body>
 

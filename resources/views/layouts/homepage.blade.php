@@ -6,76 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/icon.gif') }}" />
     <title>App SiRentCar</title>
+    <style>
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #fff;
+        }
+        .preloader .loading {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            font: 14px arial;
+        }
+
+        .icon-keranjang {
+            font-size: 24px;
+            color: #ff5757;
+            position: relative;
+        }
+
+        .notif-keranjang {
+            font-size: 10px;
+            background-color: #ff5757;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 6px;
+            position: absolute;
+        }
+
+        .custom-search {
+            position: relative;
+        }
+
+        .custom-search input {
+            padding-right: 30px;
+            border-radius: 24px;
+            font-size: 15px;
+        }
+
+        .custom-search .input-group-text {
+            background: none;
+            border: none;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease; /* Tambahkan transisi warna untuk efek yang halus */
+        }
+
+        .custom-search input:focus + .input-group-text,
+        .custom-search input:not(:placeholder-shown) + .input-group-text {
+            color: #000; /* Ganti dengan warna yang diinginkan saat input aktif atau terisi */
+        }
+    </style>
 </head>
 
 <body>
-    <div class="col-lg-12 p-2" style="background: rgb(2, 59, 124);">
-        <div class="text-white d-flex justify-content-between container">
-            <small class="mb-0"><i class="bi bi-phone"></i> 089827351127</small>
-            <small class="mb-0">Rental Terbaik di Bali <i class="bi bi-car-front-fill"></i></small>
-            <small class="mb-0"><i class="bi bi-inboxes-fill"></i> Pesan sekarang</small>
+    <div class="preloader">
+        <div class="loading">
+          <img src="{{URL::to('assets/img/loader.gif')}}" width="300">
         </div>
     </div>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white p-4 shadow">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}" style="color: rgb(2, 59, 124);"><i
-                    class="bi bi-car-front-fill"></i> SiRentCar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmenu"
-                aria-controls="navbarmenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarmenu">
-                <div class="navbar-nav">
-                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" aria-current="page" href="{{ route('home') }}">Beranda</a>
-                    <a class="nav-link" href="#">Produk Kami</a>
-                    <a class="nav-link" href="#">Blog</a>
-                    <a class="nav-link" href="#">Kontak Kami</a>
-                </div>
-            </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary btn-sm text-white px-3 me-2" href="{{ route('login') }}">
-                            <i class="bi bi-person-circle"></i> {{ __('Login') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-dark btn-sm px-3 text-white" href="{{ route('register') }}">
-                            <i class="bi bi-box-arrow-in-right"></i> {{ __('Register') }}</a>
-                    </li>
-                    @endguest
+    @include('layouts.navbar')
 
-                    @auth
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" type="button" id="usersmenu"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->nama }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="usersmenu">
-                            <li>
-                                <a class="dropdown-item" href="#">Profil</a>
-                                <a class="dropdown-item" href="#">Riwayat Penyewaan</a>
-                                <a class="dropdown-item text-danger" href="{{ route('posts.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }} <i class="bi bi-box-arrow-right"></i>
-                                </a>
-                                <form id="logout-form" action="{{ route('posts.logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container min-vh-100">
+    <div class="container">
         @yield('homepage')
     </div>
 
@@ -85,7 +89,7 @@
                 <p class="h2" style="color: rgb(2, 59, 124);"><i class="bi bi-car-front-fill"></i> SiRentCar</p>
                 <small class="d-block mb-3 text-muted">&copy; 2022–2023</small>
             </div>
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-12">
                 <h5>Menu</h5>
                 <ul class="list-unstyled text-small">
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Beranda</a></li>
@@ -94,7 +98,7 @@
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Kontak Kami</a></li>
                 </ul>
             </div>
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-12">
                 <h5>Jam Operasi</h5>
                 <ul class="list-unstyled text-small">
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i class="bi bi-clock"></i>
@@ -113,7 +117,7 @@
                             Minggu Tidak Buka</a></li>
                 </ul>
             </div>
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-4 col-12">
                 <h5>Social Media</h5>
                 <ul class="list-unstyled text-small">
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="#"><i
@@ -128,7 +132,53 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script>
+        $(document).ready(function(){
+          $(".preloader").fadeOut();
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.querySelectorAll('.logout').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const deleteUrl = this.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Ingin logout dari aplikasi',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Logout!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(deleteUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token if needed
+                                'Content-Type': 'application/json', // Adjust the content type if necessary
+                            },
+                            // You can include a request body if needed
+                            // body: JSON.stringify({}),
+                        })
+                        .then(response => {
+                            // Handle the response as needed
+                            window.location.href = deleteUrl;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+        });
+
     </script>
     @include('sweetalert::alert')
 </body>

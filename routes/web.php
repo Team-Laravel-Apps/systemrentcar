@@ -6,7 +6,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Hompage\IndexController;
+use App\Http\Controllers\Homepage\IndexController;
+use App\Http\Controllers\Homepage\KontakController;
+use App\Http\Controllers\Homepage\ProdukController;
+use App\Http\Controllers\Homepage\SyaratController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
@@ -57,7 +60,7 @@ Route::middleware('auth')->group(function(){
 
 
 //Logout
-Route::post("logout/post", [LogoutController::class, "posts"])->name('posts.logout');
+Route::match(['get', 'post'], "logout/post", [LogoutController::class, "posts"])->name('posts.logout');
 
 
 //Create
@@ -81,4 +84,11 @@ Route::post("cars/post", [CarController::class, "posts"])->name('posts.car');
 
 // Pelanggan
 Route::get("/", [IndexController::class, "index"])->name("home");
+Route::get("/produk-kami", [ProdukController::class, "index"])->name("produk");
+Route::get("/syarat-ketentuan", [SyaratController::class, "index"])->name("syarat");
+Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 
+
+Route::middleware('auth')->group(function(){
+    Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
+});

@@ -3,7 +3,7 @@
 <style>
     .carousel-inner img {
         /* object-fit: cover; */
-        max-height: 600px;
+        max-height: 700px;
         width: 100%;
         background-size: cover;
         background-position: center;
@@ -12,58 +12,9 @@
 
 <div class="container mt-3">
     <div class="row justify-content-center align-items-center">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner" style="max-height: 700px;">
-                <div class="carousel-item active d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider1.png') }}" class="d-block" alt="...">
-                </div>
-                <div class="carousel-item d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider2.png') }}" class="d-block" alt="...">
-                </div>
-                <div class="carousel-item d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider3.png') }}" class="d-block" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <div class="container col-md-12 mt-4">
-            <div class="row">
-                <div class="col-lg-4 col-4 mb-2">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <img src="{{ asset('assets/img/iklan1.png') }}" alt="Respon cepat" width="200" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-4 mb-2">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <img src="{{ asset('assets/img/iklan2.png') }}" alt="Respon cepat" width="200" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-4 mb-2">
-                    <div class="card shadow">
-                        <div class="card-body text-center">
-                            <img src="{{ asset('assets/img/iklan3.png') }}" alt="Respon cepat" width="200" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="container col-md-12 mt-4" style="border-radius: 10px;">
-            <p class="text-secondary" style="font-size: 20px;">Kategori Kendaraan</p>
+            <p class="text-secondary" style="font-size: 20px;">KATEGORI</p>
             <div class="pt-3">
                 <div style="display: flex; overflow-x : auto;" id="pot">
                     @foreach($kategori as $item)
@@ -82,11 +33,10 @@
             </div>
         </div>
 
-
         <div class="row mt-3 mb-5">
-            <h4 class="text-secondary mb-3" style="font-weight: 400;"><i class="bi bi-bookmark-check-fill"></i> Rekomendasi buat anda</h4>
+            <h4 class="text-secondary mb-3" style="font-weight: 400;"><i class="bi bi-car-front-fill"></i> Produk Kami</h4>
             @foreach ($car as $data)
-            <div class="col-xxl-3 col-lg-4 col-md-6 mb-3">
+            <div class="col-xxl-3 col-md-6 mb-3">
                 <div class="card shadow">
                     <a href="{{ route('detail.produk', $data->id) }}" style="text-decoration: none; color: black;">
                         <img src="{{ asset('drive/cars/'. $data->img_kendaraan) }}" class="card-img-top" alt="{{ $data->nama_kendaraan ?? 'tidak ada' }}" style="background-size: cover; background-position: center; min-height: 220px; max-width: 100%; object-fit: content;">
@@ -115,4 +65,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

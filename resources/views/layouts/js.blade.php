@@ -41,4 +41,49 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function(){
+          $(".preloader").fadeOut();
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.querySelectorAll('.logout').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const deleteUrl = this.getAttribute('href');
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Ingin logout dari dashboard admin',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Logout!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(deleteUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token if needed
+                                'Content-Type': 'application/json', // Adjust the content type if necessary
+                            },
+                            // You can include a request body if needed
+                            // body: JSON.stringify({}),
+                        })
+                        .then(response => {
+                            // Handle the response as needed
+                            window.location.href = deleteUrl;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
     @include('sweetalert::alert')

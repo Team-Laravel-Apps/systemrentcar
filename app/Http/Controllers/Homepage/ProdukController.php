@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Hompage;
+namespace App\Http\Controllers\Homepage;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Cars;
 use App\Models\Category;
 
-class IndexController extends Controller
+class ProdukController extends Controller
 {
     public function index()
     {
@@ -20,6 +20,15 @@ class IndexController extends Controller
             'kategori' => Category::all(),
         ];
 
-        return view('homepage.index', $data);
+        return view('homepage.produk', $data);
+    }
+
+    public function detail($id)
+    {
+        $data = [
+            'detail'       => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')->find($id)
+        ];
+
+        return view('homepage.detailproduk', $data);
     }
 }

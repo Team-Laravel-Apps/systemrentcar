@@ -6,8 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Website penyedia layanan penyewaan mobil online di bali">
+    <meta name="author" content="Aisyah">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/icon.gif') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/img/icon.gif') }}" />
 
     <title>SiRentCar</title>
 
@@ -178,6 +180,23 @@
             padding: 8px 16px;
             cursor: pointer;
             font-size: 14px;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #fff;
+        }
+        .preloader .loading {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            font: 14px arial;
         }
     </style>
 </head>
