@@ -15,7 +15,7 @@ class ProdukController extends Controller
         $data = [
             'car' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->where('status_car', 'tersedia')
-            ->get(),
+            ->paginate(2),
 
             'kategori' => Category::all(),
         ];

@@ -23,9 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarmenu">
             <ul class="navbar-nav mt-4 mb-3">
                 <li class="nav-item d-lg-none">
-                    <form class="form-inline custom-search">
+                    <form action="{{ route('search') }}" method="GET" class="form-inline custom-search" >
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="px-4 py-3 form-control rounded-pill" name="search" placeholder="Cari mobil anda...">
+                            <input type="text" class="px-4 py-3 form-control rounded-pill" name="search" placeholder="Cari mobil anda..." value="{{ request('search') }}">
                             <div class="input-group-text px-4" style="border-radius: 50%; z-index: 100;">
                                 <i class="bi bi-search"></i>
                             </div>
@@ -43,9 +44,10 @@
 
             <ul class="navbar-nav ms-auto ml-auto">
                 <li class="nav-item d-lg-block d-none">
-                    <form class="form-inline custom-search">
+                    <form action="{{ route('search') }}" method="GET" class="form-inline custom-search">
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="px-4 py-3 form-control rounded-pill" name="search" placeholder="Cari mobil anda...">
+                            <input type="text" class="px-4 py-3 form-control rounded-pill" name="search" placeholder="Cari mobil anda..." value="{{ request('search') }}">
                             <div class="input-group-text px-4" style="border-radius: 50%; z-index: 100;">
                                 <i class="bi bi-search"></i>
                             </div>

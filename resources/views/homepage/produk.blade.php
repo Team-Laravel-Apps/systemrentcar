@@ -15,18 +15,19 @@
 
         <div class="container col-md-12 mt-4" style="border-radius: 10px;">
             <p class="text-secondary" style="font-size: 20px;">KATEGORI</p>
-            <div class="pt-3">
-                <div style="display: flex; overflow-x : auto;" id="pot">
+            <div class="pt-3 d-flex justify-content-between">
+                <div class="col-lg-12" style="display: flex; overflow-x : auto;" id="pot">
                     @foreach($kategori as $item)
-                    <div class="card mx-auto border-0" style="min-width: 6rem; height: 8rem; line-height: 2rem; min-height: 2rem; display: block;">
-                        <a class="px-auto" href="#" style="text-decoration: none;">
-                            <img src="{{ asset('drive/kategori/'. $item->icon) }}" class="card-img-top img-fluid" alt="#"
-                            style="background-size: cover; background-position: center; max-height: 70px; max-width: 150px; object-fit: cover;">
-                            <div class="m-auto">
-                                <h6 class="card-title text-center font-weight-600 text-dark" style="font-size: 15px;">{{ $item->category }}</h6>
-                            </div>
-
-                        </a>
+                    <div class="card border-0 col-xxl-2 col-lg-3 col-md-4 col-6" style="min-width: 6rem; height: 8.5rem; line-height: 2rem; min-height: 2rem; display: block;">
+                        <div class="card-body">
+                            <a class="p-auto" href="#" style="text-decoration: none;">
+                                <img src="{{ asset('drive/kategori/'. $item->icon) }}" class="card-img-top img-fluid mb-2" alt="#"
+                                style="background-size: cover; background-position: center; max-height: 65px; max-width: 150px; object-fit: cover;">
+                                <div class="text-center">
+                                    <h6 class="font-weight-500 text-dark" style="max-width: 150px;">{{ $item->category }}</h6>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                     @endforeach
                 </div>
@@ -35,33 +36,50 @@
 
         <div class="row mt-3 mb-5">
             <h4 class="text-secondary mb-3" style="font-weight: 400;"><i class="bi bi-car-front-fill"></i> Produk Kami</h4>
-            @foreach ($car as $data)
-            <div class="col-xxl-3 col-md-6 mb-3">
-                <div class="card shadow">
-                    <a href="{{ route('detail.produk', $data->id) }}" style="text-decoration: none; color: black;">
-                        <img src="{{ asset('drive/cars/'. $data->img_kendaraan) }}" class="card-img-top" alt="{{ $data->nama_kendaraan ?? 'tidak ada' }}" style="background-size: cover; background-position: center; min-height: 220px; max-width: 100%; object-fit: content;">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <small class="card-text mb-1 text-secondary"><i class="bi bi-car-front-fill"></i> {{ $data->category ?? 'tidak ada' }}</small>
-                                    <h6 class="card-title">{{ $data->nama_kendaraan ?? 'tidak ada'}}</h6>
+            @if(isset($car) && $car->count() > 0)
+                @foreach ($car as $data)
+                    <div class="col-xxl-3 col-md-6 mb-3">
+                        <div class="card shadow">
+                            <a href="{{ route('detail.produk', $data->id) }}" style="text-decoration: none; color: black;">
+                                <img src="{{ asset('drive/cars/'. $data->img_kendaraan) }}" class="card-img-top" alt="{{ $data->nama_kendaraan ?? 'tidak ada' }}" style="background-size: cover; background-position: center; min-height: 220px; max-width: 100%; object-fit: content;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <small class="card-text mb-1 text-secondary"><i class="bi bi-car-front-fill"></i> {{ $data->category ?? 'tidak ada' }}</small>
+                                            <h6 class="card-title">{{ $data->nama_kendaraan ?? 'tidak ada'}}</h6>
+                                        </div>
+                                        <div class="col-12">
+                                            <small class="float-right">Tersedia : {{ $data->unit ?? 'tidak ada' }} unit</small><br>
+                                            <small class="float-right">Kapasitas : {{ $data->kapasitas ?? 'tidak ada' }} orang</small><br>
+                                            <small class="float-right">Transmisi : {{ $data->transmisi ?? 'tidak ada' }}</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 mt-3">
+                                        <h5 class="text-end"><b>Rp. {{ number_format($data->biaya_sewa ?? 'Rp. 0') }}</b><span style="font-size: 14px;">/hari</span></h5>
+                                    </div>
+                                    <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
+                                    <a href="#" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></a>
                                 </div>
-                                <div class="col-12">
-                                    <small class="float-right">Tersedia : {{ $data->unit ?? 'tidak ada' }} unit</small><br>
-                                    <small class="float-right">Kapasitas : {{ $data->kapasitas ?? 'tidak ada' }} orang</small><br>
-                                    <small class="float-right">Transmisi : {{ $data->transmisi ?? 'tidak ada' }}</small>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-3 mt-3">
-                                <h5 class="text-end"><b>Rp. {{ number_format($data->biaya_sewa ?? 'Rp. 0') }}</b><span style="font-size: 14px;">/hari</span></h5>
-                            </div>
-                            <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
-                            <a href="#" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></a>
+                            </a>
                         </div>
-                    </a>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-lg-12 col-md-12">
+                    <div class="card border-0">
+                        <div class="card-body d-flex justify-content-center">
+                            <div>
+                                <img src="{{ URL::to('assets/img/icon.gif') }}" width="200">
+                                <p>Tidak ada produk ditemukan</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            @endif
+
+            <div class="col-lg-12">
+                @include('homepage.paginate')
             </div>
-            @endforeach
         </div>
     </div>
 </div>

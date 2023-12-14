@@ -15,6 +15,7 @@ class IndexController extends Controller
         $data = [
             'car' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->where('status_car', 'tersedia')
+            ->take(6)
             ->get(),
 
             'kategori' => Category::all(),
