@@ -52,33 +52,33 @@ class KeranjangController extends Controller
         }
     }
 
-    public function jumlah(Request $request)
-    {
-        $cek = Rental::join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
-        ->where('car_id', $request->car_id)->first();
+    // public function jumlah(Request $request)
+    // {
+    //     $cek = Rental::join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
+    //     ->where('car_id', $request->car_id)->first();
 
-        if ($request->value == 'plus') {
-            $qty = $cek ? ++$cek->qty : 1;
-        } else {
-            $qty = $cek ? max(0, --$cek->qty) : 1;
-        }
+    //     if ($request->value == 'plus') {
+    //         $qty = $cek ? ++$cek->qty : 1;
+    //     } else {
+    //         $qty = $cek ? max(0, --$cek->qty) : 1;
+    //     }
 
-        $totalbiaya = $cek->biaya_sewa * $qty;
+    //     $totalbiaya = $cek->biaya_sewa * $qty;
 
-        if($qty == 0){
-            Rental::where('car_id', $request->car_id)->delete();
-        }else{
-            Rental::updateOrCreate(
-                ['car_id' => $request->car_id],
-                [
-                    'qty'   => $qty,
-                    'biaya' => $totalbiaya,
-                ]
-            );
-        }
+    //     if($qty == 0){
+    //         Rental::where('car_id', $request->car_id)->delete();
+    //     }else{
+    //         Rental::updateOrCreate(
+    //             ['car_id' => $request->car_id],
+    //             [
+    //                 'qty'   => $qty,
+    //                 'biaya' => $totalbiaya,
+    //             ]
+    //         );
+    //     }
 
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 
     public function delete(Request $request, $id_rental)
     {

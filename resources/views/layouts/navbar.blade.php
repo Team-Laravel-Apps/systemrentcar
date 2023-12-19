@@ -99,7 +99,7 @@
                         }
                     @endphp
                     <a href="{{ route('keranjang', auth()->user()->id) }}" class="cart-container">
-                        <i class="bi bi-cart-fill icon-keranjang">
+                        <i class="bi bi-bookmark-fill icon-keranjang">
                             <span class="notif-keranjang">{{ $notif_order }}</span>
                         </i>
                     </a>

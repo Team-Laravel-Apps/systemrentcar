@@ -94,15 +94,15 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 
 
 Route::middleware('auth')->group(function(){
-    Route::get("/keranjang/{id}", [KeranjangController::class, "index"])->name("keranjang");
+    Route::get("/rental/{id}", [KeranjangController::class, "index"])->name("keranjang");
     Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
 
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");
     Route::get("produk-kami/{id_category}", [SearchController::class, "category"])->name("category.produk");
-    Route::post("keranjang/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
-    Route::post("keranjang/jumlah", [KeranjangController::class, "jumlah"])->name("keranjang.jumlah");
-    Route::get('keranjang/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
+    Route::post("rental/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
+    Route::get('rental/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
     Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");
     Route::post("/myprofile/post", [ProfileController::class, "posts"])->name("myprofile.posts");
+    Route::post("/checkout/post", [PesanController::class, "posts"])->name("checkout.posts");
 });

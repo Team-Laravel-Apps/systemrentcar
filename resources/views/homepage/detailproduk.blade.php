@@ -14,23 +14,9 @@
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner" style="max-height: 700px;">
                 <div class="carousel-item active d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider1.png') }}" class="d-block" alt="...">
-                </div>
-                <div class="carousel-item d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider2.png') }}" class="d-block" alt="...">
-                </div>
-                <div class="carousel-item d-flex align-items-center">
-                    <img src="{{ asset('assets/img/slider3.png') }}" class="d-block" alt="...">
+                    <img src="{{ asset('drive/cars/'. $detail->img_kendaraan) }}" class="d-block" alt="...">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
 
         <div class="row mt-4 mb-5">
@@ -70,9 +56,14 @@
                     </div>
                 </div>
 
-                <a class="btn btn-success mb-2">Diskusi <i class="bi bi-whatsapp"></i></a>
-                <a class="btn btn-warning mb-2">Keranjang <i class="bi bi-cart"></i></a>
-                <a class="btn btn-primary mb-2">Pesan Sekarang <i class="bi bi-inboxes-fill"></i></a>
+                <form action="{{ route('keranjang.posts') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="car_id" value="{{ $detail->id_car }}">
+                    <input type="hidden" name="biaya" value="{{ $detail->biaya_sewa }}">
+                    <a class="btn btn-success mb-2">Diskusi <i class="bi bi-whatsapp"></i></a>
+                    <button type="submit" class="btn mb-2 text-white" style="background: rgb(18, 72, 0);">Save <i class="bi bi-cart"></i></button>
+                    <a class="btn mb-2 text-white" style="background: rgb(2, 59, 124);">Pesan Sekarang <i class="bi bi-inboxes-fill"></i></a>
+                </form>
             </div>
         </div>
     </div>

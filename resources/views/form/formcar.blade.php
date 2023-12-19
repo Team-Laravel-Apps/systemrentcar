@@ -147,21 +147,6 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-sm-12 mb-4">
-                            <label>Detail gambar kendaraan</label>
-                            <div class="upload__box" id="drag-and-drop-box">
-                                <div class="upload__btn-box">
-                                    <label class="upload__btn" for="file-input">
-                                        <p>Letakan gambar disini</p>
-                                        <p id="file-label">Upload file</p>
-                                        <input type="file" id="file-input" multiple="" data-max_length="20" class="upload__inputfile form-control" name="image[]">
-                                    </label>
-                                </div>
-                                <div class="upload__img-wrap" id="upload-img-wrap"></div>
-                                <div id="file-info"></div>
-                            </div>
-                        </div>
-
                         <div class="col-lg-12">
                             <a href="{{ route('mobil') }}" class="btn btn-danger">Kembali <i class="bi bi-x-circle-fill"></i></a>
                             <button type="submit" class="btn btn-info">Simpan <i class="bi bi-check-circle-fill"></i></button>
