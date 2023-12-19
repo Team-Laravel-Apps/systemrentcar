@@ -14,13 +14,18 @@
     <div class="row justify-content-center align-items-center">
 
         <div class="container col-md-12 mt-4" style="border-radius: 10px;">
-            <p class="text-secondary" style="font-size: 20px;">KATEGORI</p>
+            <div class="d-flex flex-row justify-content-between">
+                <p class="text-secondary" style="font-size: 20px;">KATEGORI</p>
+                @if(Route::is('category.produk'))
+                    <a href="{{ route('produk') }}" class="text-danger nav-link"><i class="bi bi-x"></i> Ganti Kategori</a>
+                @endif
+            </div>
             <div class="pt-3 d-flex justify-content-between">
                 <div class="col-lg-12" style="display: flex; overflow-x : auto;" id="pot">
                     @foreach($kategori as $item)
                     <div class="card border-0 col-xxl-2 col-lg-3 col-md-4 col-6" style="min-width: 6rem; height: 8.5rem; line-height: 2rem; min-height: 2rem; display: block;">
                         <div class="card-body">
-                            <a class="p-auto" href="#" style="text-decoration: none;">
+                            <a class="p-auto" href="{{ route('category.produk', $item->id_category) }}" style="text-decoration: none;">
                                 <img src="{{ asset('drive/kategori/'. $item->icon) }}" class="card-img-top img-fluid mb-2" alt="#"
                                 style="background-size: cover; background-position: center; max-height: 65px; max-width: 150px; object-fit: cover;">
                                 <div class="text-center">
@@ -36,8 +41,8 @@
 
         <div class="row mt-3 mb-5">
             <h4 class="text-secondary mb-3" style="font-weight: 400;"><i class="bi bi-car-front-fill"></i> Produk Kami</h4>
-            @if(isset($car) && $car->count() > 0)
-                @foreach ($car as $data)
+            @if(isset($cars) && $cars->count() > 0)
+                @foreach ($cars as $data)
                     <div class="col-xxl-3 col-md-6 mb-3">
                         <div class="card shadow">
                             <a href="{{ route('detail.produk', $data->id) }}" style="text-decoration: none; color: black;">
@@ -57,8 +62,14 @@
                                     <div class="col-12 mb-3 mt-3">
                                         <h5 class="text-end"><b>Rp. {{ number_format($data->biaya_sewa ?? 'Rp. 0') }}</b><span style="font-size: 14px;">/hari</span></h5>
                                     </div>
-                                    <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
-                                    <a href="#" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></a>
+
+                                    <form action="{{ route('keranjang.posts') }}" method="POST">
+                                        @csrf
+                                        <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
+                                        <input type="hidden" name="car_id" value="{{ $data->id_car }}">
+                                        <input type="hidden" name="biaya" value="{{ $data->biaya_sewa }}">
+                                        <button type="submit" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></button>
+                                    </form>
                                 </div>
                             </a>
                         </div>
@@ -77,8 +88,10 @@
                 </div>
             @endif
 
-            <div class="col-lg-12">
-                @include('homepage.paginate')
+            <div class="col-lg-12 mt-4">
+                <div class="d-flex justify-content-center">
+                    {{ $cars->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>

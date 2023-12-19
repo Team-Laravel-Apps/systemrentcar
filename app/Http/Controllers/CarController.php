@@ -103,7 +103,8 @@ class CarController extends Controller
             }
         }
 
-        $idcar = 'MBM'.'1' . rand(0, 100) . '.' . str_pad(rand(0, 1000), 3, '0', STR_PAD_LEFT) . str_pad(rand(0, 1000), 3, '0', STR_PAD_LEFT) . rand(1, 9);
+        $lastid = $request['id'] ? $request['id'] : Cars::max('id') + 1;
+        $idcar = 'MBM' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
         $set = Cars::updateOrCreate(['id' => $request['id']], [
             'id_car'            => $idcar,
             'img_kendaraan'     => $files,
@@ -131,5 +132,6 @@ class CarController extends Controller
             return redirect()->back();
         }
     }
+
 
 }

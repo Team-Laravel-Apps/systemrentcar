@@ -75,7 +75,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="usersmenu">
                         <li>
-                            <a class="dropdown-item" href="#">Profil</a>
+                            <a class="dropdown-item" href="{{ route('myprofile') }}">Profil</a>
                             <a class="dropdown-item" href="#">Riwayat Penyewaan</a>
                             <a class="dropdown-item text-danger logout" href="{{ route('posts.logout') }}">
                                 {{ __('Logout') }} <i class="bi bi-box-arrow-right"></i>
@@ -90,19 +90,19 @@
                 <span class="mx-2"></span>
 
                 <li class="nav-item py-2" style="position: relative;">
-                    {{-- @php
-                        $order = \App\Order::where('id_user', Auth::user()->id)->where('status_order', 0)->first();
+                    @php
+                        $order = App\Models\Rental::where('id_pelanggan', auth::user()->id)->where('status_rental', 'pendding')->first();
                         if (!empty($order)) {
-                            $notif_order = \App\OrderDetail::where('id_order', $order->id)->count();
+                            $notif_order = App\Models\Rental::where('id_pelanggan', $order->id_pelanggan)->count();
                         } else {
                             $notif_order = '0';
                         }
-                    @endphp --}}
-                    <div class="cart-container">
+                    @endphp
+                    <a href="{{ route('keranjang', auth()->user()->id) }}" class="cart-container">
                         <i class="bi bi-cart-fill icon-keranjang">
-                            <span class="notif-keranjang">3</span>
+                            <span class="notif-keranjang">{{ $notif_order }}</span>
                         </i>
-                    </div>
+                    </a>
                 </li>
                 @endauth
             </ul>

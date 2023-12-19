@@ -7,8 +7,10 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Homepage\IndexController;
+use App\Http\Controllers\Homepage\KeranjangController;
 use App\Http\Controllers\Homepage\KontakController;
 use App\Http\Controllers\Homepage\ProdukController;
+use App\Http\Controllers\Homepage\ProfileController;
 use App\Http\Controllers\Homepage\SearchController;
 use App\Http\Controllers\Homepage\SyaratController;
 use App\Http\Controllers\PelangganController;
@@ -91,6 +93,13 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 
 
 Route::middleware('auth')->group(function(){
+    Route::get("/keranjang/{id}", [KeranjangController::class, "index"])->name("keranjang");
+    Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");
+
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
-    Route::get("/search", [SearchController::class, "search"])->name("search");
+    Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");
+    Route::get("produk-kami/{id_category}", [SearchController::class, "category"])->name("category.produk");
+    Route::post("keranjang/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
+    Route::post("keranjang/jumlah", [KeranjangController::class, "jumlah"])->name("keranjang.jumlah");
+    Route::get('keranjang/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
 });

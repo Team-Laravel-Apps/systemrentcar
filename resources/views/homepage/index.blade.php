@@ -68,7 +68,7 @@
                 <div style="display: flex; overflow-x : auto;" id="pot">
                     @foreach($kategori as $item)
                     <div class="card mx-auto border-0" style="min-width: 6rem; height: 8rem; line-height: 2rem; min-height: 2rem; display: block;">
-                        <a class="px-auto" href="#" style="text-decoration: none;">
+                        <a class="px-auto" href="{{ route('category.produk', $item->id_category) }}" style="text-decoration: none;">
                             <img src="{{ asset('drive/kategori/'. $item->icon) }}" class="card-img-top img-fluid" alt="#"
                             style="background-size: cover; background-position: center; max-height: 70px; max-width: 150px; object-fit: cover;">
                             <div class="m-auto">
@@ -105,8 +105,13 @@
                             <div class="col-12 mb-3 mt-3">
                                 <h5 class="text-end"><b>Rp. {{ number_format($data->biaya_sewa ?? 'Rp. 0') }}</b><span style="font-size: 14px;">/hari</span></h5>
                             </div>
-                            <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
-                            <a href="#" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></a>
+                            <form action="{{ route('keranjang.posts') }}" method="POST">
+                                @csrf
+                                <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
+                                <input type="hidden" name="car_id" value="{{ $data->id_car }}">
+                                <input type="hidden" name="biaya" value="{{ $data->biaya_sewa }}">
+                                <button type="submit" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></button>
+                            </form>
                         </div>
                     </a>
                 </div>

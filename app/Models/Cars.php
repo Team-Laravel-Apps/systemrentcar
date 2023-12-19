@@ -10,6 +10,7 @@ class Cars extends Model
     use HasFactory;
     protected $table = 'tbl_cars';
     protected $fillable = [
+        'id',
         'id_car',
         'id_category',
         'nama_kendaraan',

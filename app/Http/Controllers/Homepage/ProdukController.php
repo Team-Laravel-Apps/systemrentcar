@@ -13,9 +13,9 @@ class ProdukController extends Controller
     public function index()
     {
         $data = [
-            'car' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+            'cars' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->where('status_car', 'tersedia')
-            ->paginate(2),
+            ->paginate(12),
 
             'kategori' => Category::all(),
         ];

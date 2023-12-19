@@ -11,11 +11,13 @@ class Rental extends Model
     protected $table = 'tbl_rental';
     public $timestamps = false;
     protected $fillable = [
+        'id',
         'id_rental',
         'id_pelanggan',
         'car_id',
         'start_date',
         'end_date',
+        'qty',
         'biaya',
         'status_rental'
     ];
