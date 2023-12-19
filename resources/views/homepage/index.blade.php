@@ -107,7 +107,7 @@
                             </div>
                             <form action="{{ route('keranjang.posts') }}" method="POST">
                                 @csrf
-                                <a href="#" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
+                                <a href="{{ route('checkout', $data->id_car) }}" class="btn text-white" style="background: rgb(2, 59, 124);"><i class="fa fa-shopping-cart"></i> Pesan <i class="bi bi-car-front-fill"></i></a>
                                 <input type="hidden" name="car_id" value="{{ $data->id_car }}">
                                 <input type="hidden" name="biaya" value="{{ $data->biaya_sewa }}">
                                 <button type="submit" class="btn text-white" style="background: rgb(218, 101, 5);"><i class="fa fa-shopping-cart"></i> Keranjang <i class="bi bi-cart"></i></button>

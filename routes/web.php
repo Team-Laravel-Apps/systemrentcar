@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Homepage\IndexController;
 use App\Http\Controllers\Homepage\KeranjangController;
 use App\Http\Controllers\Homepage\KontakController;
+use App\Http\Controllers\Homepage\PesanController;
 use App\Http\Controllers\Homepage\ProdukController;
 use App\Http\Controllers\Homepage\ProfileController;
 use App\Http\Controllers\Homepage\SearchController;
@@ -94,7 +95,7 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 
 Route::middleware('auth')->group(function(){
     Route::get("/keranjang/{id}", [KeranjangController::class, "index"])->name("keranjang");
-    Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");
+    Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
 
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");
@@ -102,4 +103,6 @@ Route::middleware('auth')->group(function(){
     Route::post("keranjang/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
     Route::post("keranjang/jumlah", [KeranjangController::class, "jumlah"])->name("keranjang.jumlah");
     Route::get('keranjang/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
+    Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");
+    Route::post("/myprofile/post", [ProfileController::class, "posts"])->name("myprofile.posts");
 });
