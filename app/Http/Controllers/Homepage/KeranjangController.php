@@ -29,7 +29,11 @@ class KeranjangController extends Controller
         $lastid = $request['id'] ? $request['id'] : Rental::max('id') + 1;
         $kode = 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
         $cek = Rental::where('car_id', $request->car_id)->first();
-        $totalbiaya = $request->biaya * number_format($cek ? ++$cek->qty : 1);
+        if($cek)
+        {
+            Alert::warning('Opps', 'Produk sudah berada di rental');
+            return redirect()->back();
+        }
         $keranjang = Rental::updateOrCreate(['car_id' => $request['car_id']],[
             'id'            => $lastid,
             'id_rental'     => $kode,
@@ -37,8 +41,7 @@ class KeranjangController extends Controller
             'car_id'        => $request->car_id,
             'start_date'    => null,
             'end_date'      => null,
-            'qty'           => $cek ? ++$cek->qty : 1,
-            'biaya'         => $totalbiaya,
+            'biaya'         => $request->biaya,
             'status_rental' => 'pendding',
         ]);
 
@@ -47,7 +50,7 @@ class KeranjangController extends Controller
             Alert::success('Berhasil', 'Produk berhasil ditambahkan kekeranjang');
             return redirect()->back();
         }else{
-            Alert::warning('Gagal', 'Produk gagal ditambahkan kekeranjang');
+            Alert::error('Gagal', 'Produk gagal ditambahkan kekeranjang');
             return redirect()->back();
         }
     }

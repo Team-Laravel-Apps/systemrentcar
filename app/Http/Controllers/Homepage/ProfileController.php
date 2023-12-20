@@ -82,6 +82,14 @@ class ProfileController extends Controller
             }
         }
 
+        $pass = User::where('id', $request->id)->first();
+
+        if($request->password == ""){
+            $password = $pass->password;
+        }else{
+            $password = Hash::make($request['password']);
+        }
+
         $set = User::updateOrCreate(['id' => $request['id']], [
             'profile'           => $files,
             'nama'              => $request['nama'] == '' ? null : $request['nama'],
@@ -91,7 +99,7 @@ class ProfileController extends Controller
             'email'             => $request['email'] == '' ? null : $request['email'],
             'alamat'            => $request['alamat'] == '' ? null : $request['alamat'],
             'username'          => $request['username'] == '' ? null : $request['username'],
-            'password'          => Hash::make($request['password']) == '' ? '' : Hash::make($request['password']),
+            'password'          => $password,
         ]);
 
         if ($set) {

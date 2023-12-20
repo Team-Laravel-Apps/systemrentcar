@@ -14,7 +14,7 @@
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner" style="max-height: 700px;">
                 <div class="carousel-item active d-flex align-items-center">
-                    <img src="{{ asset('drive/cars/'. $detail->img_kendaraan) }}" class="d-block" alt="...">
+                    <img src="{{ asset('drive/cars/'. $detail->img_kendaraan) }}" class="d-block" alt="..." style="object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
                     <input type="hidden" name="biaya" value="{{ $detail->biaya_sewa }}">
                     <a class="btn btn-success mb-2">Diskusi <i class="bi bi-whatsapp"></i></a>
                     <button type="submit" class="btn mb-2 text-white" style="background: rgb(18, 72, 0);">Save <i class="bi bi-cart"></i></button>
-                    <a class="btn mb-2 text-white" style="background: rgb(2, 59, 124);">Pesan Sekarang <i class="bi bi-inboxes-fill"></i></a>
+                    <a href="{{ route('checkout', $detail->id_car) }}" class="btn mb-2 text-white" style="background: rgb(2, 59, 124);">Pesan Sekarang <i class="bi bi-inboxes-fill"></i></a>
                 </form>
             </div>
         </div>

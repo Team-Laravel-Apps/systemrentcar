@@ -148,7 +148,7 @@
         </div>
 
         <div class="row justify-content-center align-items-center">
-            <div class="col-lg-8 row">
+            <div class="col-lg-8 row g-0">
                 <div class="col-lg-12">
                     <ul style="color: rgb(2, 59, 124);;">
                         <li style="font-size: 12px;">Isi seluruh format input yang telah tersedia</li>

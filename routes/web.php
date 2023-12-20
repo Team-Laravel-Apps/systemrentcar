@@ -96,6 +96,7 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 Route::middleware('auth')->group(function(){
     Route::get("/rental/{id}", [KeranjangController::class, "index"])->name("keranjang");
     Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
+    Route::get("/payment/{id_car}", [PesanController::class, "payment"])->name("payment");
 
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");

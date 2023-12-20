@@ -73,7 +73,7 @@
                     <a class="nav-link dropdown-toggle" type="button" id="usersmenu" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ Auth::user()->username }}
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="usersmenu">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usersmenu">
                         <li>
                             <a class="dropdown-item" href="{{ route('myprofile') }}">Profil</a>
                             <a class="dropdown-item" href="#">Riwayat Penyewaan</a>

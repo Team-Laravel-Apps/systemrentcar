@@ -50,7 +50,13 @@ class PesanController extends Controller
         $days_difference = $start_date->diff($end_date)->days;
 
         $totalbiaya = $request->biaya * $days_difference;
-        dd($totalbiaya);
+        if($totalbiaya == 0)
+        {
+            Alert::warning('Opps', 'Tanggal penyewaan tidak valid');
+            return redirect()->back();
+        }
+
+        // dd($totalbiaya);
         $pesan = Rental::updateOrCreate(['car_id' => $request['car_id']],[
             'id'            => $lastid,
             'id_rental'     => $kode,
@@ -65,8 +71,16 @@ class PesanController extends Controller
 
 
         if ($pesan) {
-            Alert::success('Berhasil', 'Test 1');
-            return redirect()->back();
+            return redirect()->route('payment', $request->car_id);
         }
+    }
+
+    public function payment($id_car)
+    {
+        $data = [
+            'pay' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+                ->where('id_car', $id_car)->first()
+        ];
+        return view('homepage.checkout', $data);
     }
 }

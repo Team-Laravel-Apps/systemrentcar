@@ -17,7 +17,6 @@ class Rental extends Model
         'car_id',
         'start_date',
         'end_date',
-        'qty',
         'biaya',
         'status_rental'
     ];

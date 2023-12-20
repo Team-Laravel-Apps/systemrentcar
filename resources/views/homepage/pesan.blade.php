@@ -35,7 +35,7 @@
                                     <div class="col-lg-6 mb-2">
                                         <div class="form-group">
                                             <label for="">Start Peminjaman</label>
-                                            <input type="date" class="form-control @error ('start_date') is-invalid @enderror" name="start_date" value="{{ old('start_date') }}">
+                                            <input type="date" class="form-control @error ('start_date') is-invalid @enderror" name="start_date" value="{{ date('Y-m-d') ?? old('start_date') }}">
                                             @error('start_date')
                                                 <small class="form-text text-danger">
                                                     {{ $message }}
