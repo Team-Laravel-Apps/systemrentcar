@@ -34,11 +34,19 @@
 
         .notif-keranjang {
             font-size: 10px;
-            background-color: rgb(18, 72, 0);
+            background-color:rgb(18, 72, 0);
             color: #fff;
             border-radius: 50%;
             padding: 2px 6px;
             position: absolute;
+        }
+
+        .notif-riwayat {
+            font-size: 10px;
+            background-color:rgb(1, 43, 106);
+            color: #fff;
+            border-radius: 50%;
+            padding: 3px 6px;
         }
 
         .custom-search {

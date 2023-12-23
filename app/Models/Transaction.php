@@ -11,7 +11,8 @@ class Transaction extends Model
     protected $table = 'transactions';
     public $timestamps = false;
     protected $fillable = [
-        'id_trasaction',
+        'id',
+        'id_transaction',
         'id_rental',
         'payment_amount',
         'payment_date',

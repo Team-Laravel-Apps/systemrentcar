@@ -10,6 +10,8 @@ use DateTime;
 
 use App\Models\Cars;
 use App\Models\Rental;
+use App\Models\Transaction;
+use App\Models\Payment;
 
 class PesanController extends Controller
 {
@@ -45,6 +47,9 @@ class PesanController extends Controller
         $lastid = $request['id'] ? $request['id'] : Rental::max('id') + 1;
         $kode = 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
 
+        $lastid1 = $request['id'] ? $request['id'] : Rental::max('id') + 1;
+        $kodetrs = 'TRX' . str_pad($lastid1, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
+
         $start_date = new DateTime($request->start_date);
         $end_date = new DateTime($request->end_date);
         $days_difference = $start_date->diff($end_date)->days;
@@ -57,7 +62,7 @@ class PesanController extends Controller
         }
 
         // dd($totalbiaya);
-        $pesan = Rental::updateOrCreate(['car_id' => $request['car_id']],[
+        $pesan = Rental::updateOrCreate(['car_id' => $request['car_id']], [
             'id'            => $lastid,
             'id_rental'     => $kode,
             'id_pelanggan'  => auth()->user()->id,
@@ -69,18 +74,79 @@ class PesanController extends Controller
             'status_rental' => 'proses',
         ]);
 
+        $pesan = Transaction::create([
+            'id'            => $lastid1,
+            'id_transaction'=> $kodetrs,
+            'id_rental'     => $kode,
+            'payment_amount'  => $totalbiaya,
+        ]);
+
 
         if ($pesan) {
-            return redirect()->route('payment', $request->car_id);
+            return redirect()->route('payment', $kodetrs);
         }
     }
 
-    public function payment($id_car)
+    public function payment($id_transaction)
     {
         $data = [
-            'pay' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
-                ->where('id_car', $id_car)->first()
+            'pay' => Transaction::where('id_transaction', $id_transaction)->first(),
         ];
         return view('homepage.checkout', $data);
+    }
+
+    public function transfer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'transfer' => 'required',
+        ], [
+            'transfer.required' => 'Form tidak boleh kosong!',
+        ]);
+
+        if ($validator->fails()) {
+            Alert::warning('Oopss', 'Payment gagal dilakukan');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $file = $request->file('transfer');
+        $files = $file->hashName();
+        $file->move(public_path('drive/transfer'), $files);
+
+        $lastid = $request['id'] ? $request['id'] : Payment::max('id') + 1;
+        $idpay  = 'PAY' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
+
+        $transfer = Payment::create([
+            'id'                => $lastid,
+            'id_payment'        => $idpay,
+            'id_transaction'    => $request->id_transaction,
+            'id_rental'         => $request->id_rental,
+            'payment_date'      => $request->payment_date,
+            'payment_amount'    => $request->payment_amount,
+            'payment_image'     => $files,
+        ]);
+
+        $transfer = Transaction::updateOrCreate(['id_transaction' => $request['id_transaction']], [
+            'payment_date'    => now(),
+        ]);
+
+        if ($transfer) {
+            return redirect()->back();
+        }
+    }
+
+    public function delete(Request $request, $id_rental)
+    {
+        $cek = Rental::where('id_rental',  $id_rental)->first();
+
+        if($cek)
+        {
+            Rental::where('id_rental', $id_rental)->delete();
+            Transaction::where('id_rental', $id_rental)->delete();
+            Alert::success('Berhasil', 'Produk berhasil dihapus dari keranjang');
+            return redirect()->back();
+        }else{
+            Alert::error('Gagal', 'Produk gagal dihapus dari keranjang');
+            return redirect()->back();
+        }
     }
 }

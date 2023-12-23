@@ -17,6 +17,7 @@ class KeranjangController extends Controller
             'rental' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+            ->where('status_rental', 'pendding')
             ->where('id_pelanggan', $id)
             ->get()
         ];

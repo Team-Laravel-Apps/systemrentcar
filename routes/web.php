@@ -12,6 +12,7 @@ use App\Http\Controllers\Homepage\KontakController;
 use App\Http\Controllers\Homepage\PesanController;
 use App\Http\Controllers\Homepage\ProdukController;
 use App\Http\Controllers\Homepage\ProfileController;
+use App\Http\Controllers\Homepage\RiwayatController;
 use App\Http\Controllers\Homepage\SearchController;
 use App\Http\Controllers\Homepage\SyaratController;
 use App\Http\Controllers\PelangganController;
@@ -95,15 +96,20 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 
 Route::middleware('auth')->group(function(){
     Route::get("/rental/{id}", [KeranjangController::class, "index"])->name("keranjang");
-    Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
-    Route::get("/payment/{id_car}", [PesanController::class, "payment"])->name("payment");
+    Route::get("/riwayat/{id}", [RiwayatController::class, "index"])->name("riwayat");
+    Route::get("/checkout/{id_transaction}", [PesanController::class, "index"])->name("checkout");
+    Route::get("/payment/{id_transaction}", [PesanController::class, "payment"])->name("payment");
 
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");
     Route::get("produk-kami/{id_category}", [SearchController::class, "category"])->name("category.produk");
-    Route::post("rental/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
-    Route::get('rental/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
     Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");
+
+    Route::post("rental/posts", [KeranjangController::class, "posts"])->name("keranjang.posts");
     Route::post("/myprofile/post", [ProfileController::class, "posts"])->name("myprofile.posts");
     Route::post("/checkout/post", [PesanController::class, "posts"])->name("checkout.posts");
+    Route::post("/payment/post", [PesanController::class, "transfer"])->name("payment.posts");
+
+    Route::get('rental/delete/{id}', [KeranjangController::class, 'delete'])->name('delete.keranjang');
+    Route::get('riwayat/delete/{id}', [PesanController::class, 'delete'])->name('batal.transaksi');
 });
