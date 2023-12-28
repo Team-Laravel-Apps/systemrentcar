@@ -17,6 +17,7 @@ use App\Http\Controllers\Homepage\SearchController;
 use App\Http\Controllers\Homepage\SyaratController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,7 @@ Route::middleware('auth')->group(function(){
     Route::get("/data-kendaraan/up/{id}", [CarController::class, "update"])->name("up.mobil");
 
     Route::get("/pelanggan", [PelangganController::class, "index"])->name("pelanggan");
+    Route::get("/transaksi/pendding", [TransaksiController::class, "pendding"])->name("transaksi.pendding");
 });
 
 

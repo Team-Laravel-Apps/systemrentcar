@@ -80,14 +80,14 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#datatransaksi"
+                <a class="nav-link {{ Route::is('transaksi.pendding') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#datatransaksi"
                     aria-expanded="true" aria-controls="datatransaksi">
                     <i class="bi bi-credit-card-fill" style="font-size: 15px;"></i>
                     <span>Transaksi Customer</span>
                 </a>
-                <div id="datatransaksi" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="datatransaksi" class="collapse {{ Route::is('transaksi.pendding') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Transaksi Pendding</a>
+                        <a class="collapse-item {{ Route::is('transaksi.pendding') ? 'active' : '' }}" href="{{ route('transaksi.pendding') }}">Transaksi Pendding</a>
                         <a class="collapse-item" href="#">Transaksi Proses</a>
                         <a class="collapse-item" href="#">Transaksi Selesai</a>
                     </div>
