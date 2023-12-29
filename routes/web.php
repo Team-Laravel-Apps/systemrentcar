@@ -15,6 +15,7 @@ use App\Http\Controllers\Homepage\ProfileController;
 use App\Http\Controllers\Homepage\RiwayatController;
 use App\Http\Controllers\Homepage\SearchController;
 use App\Http\Controllers\Homepage\SyaratController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransaksiController;
@@ -62,6 +63,12 @@ Route::middleware('auth')->group(function(){
 
     Route::get("/pelanggan", [PelangganController::class, "index"])->name("pelanggan");
     Route::get("/transaksi/pendding", [TransaksiController::class, "pendding"])->name("transaksi.pendding");
+    Route::get("/transaksi/proses", [TransaksiController::class, "proses"])->name("transaksi.proses");
+    Route::get("/transaksi/selesai", [TransaksiController::class, "selesai"])->name("transaksi.selesai");
+    Route::get("/transaksi/dibatalkan", [TransaksiController::class, "batal"])->name("transaksi.batal");
+
+    Route::get("/transaksi/laporan", [TransaksiController::class, "laporan"])->name("transaksi.laporan");
+    Route::get("/transaksi/invoice", [InvoiceController::class, "index"])->name("invoice");
 });
 
 

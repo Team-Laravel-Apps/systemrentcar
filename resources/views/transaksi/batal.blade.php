@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Transaksi Pendding <i class="bi bi-hourglass-split" style="color: rgb(255, 162, 0);"></i></h1>
+        <h1 class="h3 mb-0 text-gray-800">Data Transaksi</h1>
 
     </div>
 
@@ -15,14 +15,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-cash-stack" style="font-size: 40px; color: rgb(255, 162, 0);"></i>
+                            <i class="bi bi-cash-stack" style="font-size: 40px; color: rgb(27, 99, 14);"></i>
                         </div>
 
                         <div class="col">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                Transaksi pendding
+                                Transaksi selesai
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pendding->count() }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $batal->count() }}</div>
                         </div>
 
                     </div>
@@ -52,7 +52,7 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($pendding as $data)
+                                @foreach ($batal as $data)
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->nama }}</td>

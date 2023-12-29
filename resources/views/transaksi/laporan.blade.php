@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Transaksi Pendding <i class="bi bi-hourglass-split" style="color: rgb(255, 162, 0);"></i></h1>
+        <h1 class="h3 mb-0 text-gray-800">Laporan Transaksi</h1>
 
     </div>
 
@@ -15,14 +15,14 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto mr-3">
-                            <i class="bi bi-cash-stack" style="font-size: 40px; color: rgb(255, 162, 0);"></i>
+                            <i class="bi bi-people-fill" style="font-size: 40px; color: rgb(2, 59, 124);"></i>
                         </div>
 
                         <div class="col">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                Transaksi pendding
+                                Transaksi proses
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pendding->count() }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{-- $proses->count() --}}</div>
                         </div>
 
                     </div>
@@ -49,10 +49,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
+                                {{-- @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($pendding as $data)
+                                @foreach ($proses as $data)
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->nama }}</td>
@@ -62,7 +62,7 @@
                                             <a href="{{ route('delete.users', $data->id) }}" data-nama="{{ $data->nama }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -71,31 +71,4 @@
         </div>
     </div>
 </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const nama = this.getAttribute('data-nama');
-            const deleteUrl = this.getAttribute('href');
-
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: `Anda akan menghapus users : ${nama}`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = deleteUrl;
-                }
-            });
-        });
-    });
-</script>
 @endsection
