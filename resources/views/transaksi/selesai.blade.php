@@ -43,8 +43,12 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                    <th>Kendaraan</th>
+                                    <th>Start Penyewaan</th>
+                                    <th>End Penyewaan</th>
+                                    <th>Lama Sewa</th>
+                                    <th>Total Biaya</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -53,13 +57,23 @@
                                     $no = 1;
                                 @endphp
                                 @foreach ($selesai as $data)
+                                    @php
+                                        $start_date = new \DateTime($data->start_date);
+                                        $end_date = new \DateTime($data->end_date);
+                                        $hari = $start_date->diff($end_date)->days;
+                                    @endphp
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
-                                        <td class="col-3">{{ $data->alamat }}</td>
-                                        <td class="col-2">
-                                            <a href="{{ route('delete.users', $data->id) }}" data-nama="{{ $data->nama }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
+                                        <td>{{ $data->nama_kendaraan }}</td>
+                                        <td>{{ $data->start_date }}</td>
+                                        <td>{{ $data->end_date }}</td>
+                                        <td>{{ $hari }} Hari</td>
+                                        <td>@currency($data->biaya)</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
+                                            <a class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-receipt-cutoff"></i> Invoice</a>
                                         </td>
                                     </tr>
                                 @endforeach

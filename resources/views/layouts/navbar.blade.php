@@ -77,16 +77,16 @@
 
                 @auth
                 @php
-                    $order = App\Models\Rental::where('id_pelanggan', auth()->user()->id)->where('status_rental','pendding')->first();
+                    $order = App\Models\Rental::where('id_pelanggan', auth()->user()->id)->where('status_rental','simpan')->first();
                     if (!empty($order)) {
-                        $notif_order = App\Models\Rental::where('id_pelanggan', $order->id_pelanggan)->where('status_rental','pendding')->count();
+                        $notif_order = App\Models\Rental::where('id_pelanggan', $order->id_pelanggan)->where('status_rental','simpan')->count();
                     } else {
                         $notif_order = '0';
                     }
 
-                    $riwayat = App\Models\Transaction::join('tbl_rental', 'tbl_rental.id_rental', '=', 'transactions.id_rental')->where('id_pelanggan', auth()->user()->id)->where('status_rental','proses')->first();
+                    $riwayat = App\Models\Transaction::join('tbl_rental', 'tbl_rental.id_rental', '=', 'transactions.id_rental')->where('id_pelanggan', auth()->user()->id)->first();
                     if (!empty($riwayat)) {
-                        $notif_riwayat = App\Models\Transaction::join('tbl_rental', 'tbl_rental.id_rental', '=', 'transactions.id_rental')->where('id_pelanggan', $riwayat->id_pelanggan)->where('status_rental','proses')->count();
+                        $notif_riwayat = App\Models\Transaction::join('tbl_rental', 'tbl_rental.id_rental', '=', 'transactions.id_rental')->where('id_pelanggan', $riwayat->id_pelanggan)->count();
                     } else {
                         $notif_riwayat = '0';
                     }
@@ -115,7 +115,7 @@
 
                 <li class="nav-item py-2" style="position: relative;">
                     <a href="{{ route('keranjang', auth()->user()->id) }}" class="cart-container">
-                        <i class="bi bi-bookmark-fill icon-keranjang">
+                        <i class="bi bi-cart-fill icon-keranjang">
                             <span class="notif-keranjang">{{ $notif_order }}</span>
                         </i>
                     </a>

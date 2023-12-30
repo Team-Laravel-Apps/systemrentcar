@@ -74,9 +74,16 @@
                                         <td>@currency($data->biaya)</td>
                                         <td>
                                             <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
-                                            <a class="btn btn-sm btn-primary"><i class="bi bi-check-lg"></i> Lanjutkan Proses</a>
-                                            <a class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i> Batalkan Transaksi</a>
+                                            <button class="btn btn-sm btn-success proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
+                                                <i class="bi bi-check-lg"></i> Selesaikan Transaksi
+                                            </button>
                                         </td>
+                                        <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
+                                            @csrf
+                                            <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="status" value="selesai">
+                                            <input type="hidden" name="is_complete" value="1">
+                                        </form>
                                     </tr>
 
                                     <div class="modal fade" id="bukti{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,4 +112,32 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.querySelectorAll('.proses').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('proses-form');
+            const confirmationMessage = 'Ingin menyelessaikan proses ini';
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: confirmationMessage,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Selesaikan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form using JavaScript
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 @endsection

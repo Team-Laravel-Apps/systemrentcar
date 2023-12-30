@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Transaksi Pendding <i class="bi bi-hourglass-split" style="color: rgb(255, 162, 0);"></i></h1>
+        <h1 class="h3 mb-0 text-gray-800">Data Transaksi Pending <i class="bi bi-hourglass-split" style="color: rgb(255, 162, 0);"></i></h1>
 
     </div>
 
@@ -20,7 +20,7 @@
 
                         <div class="col">
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
-                                Transaksi pendding
+                                Transaksi pending
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pendding->count() }}</div>
                         </div>
@@ -43,8 +43,12 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                    <th>Kendaraan</th>
+                                    <th>Start Penyewaan</th>
+                                    <th>End Penyewaan</th>
+                                    <th>Lama Sewa</th>
+                                    <th>Total Biaya</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -53,15 +57,52 @@
                                     $no = 1;
                                 @endphp
                                 @foreach ($pendding as $data)
+                                    @php
+                                        $start_date = new \DateTime($data->start_date);
+                                        $end_date = new \DateTime($data->end_date);
+                                        $hari = $start_date->diff($end_date)->days;
+                                    @endphp
                                     <tr>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
-                                        <td class="col-3">{{ $data->alamat }}</td>
-                                        <td class="col-2">
-                                            <a href="{{ route('delete.users', $data->id) }}" data-nama="{{ $data->nama }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
+                                        <td>{{ $data->nama_kendaraan }}</td>
+                                        <td>{{ $data->start_date }}</td>
+                                        <td>{{ $data->end_date }}</td>
+                                        <td>{{ $hari }} Hari</td>
+                                        <td>@currency($data->biaya)</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
+                                            <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
+                                                <i class="bi bi-check-lg"></i> Lanjutkan Proses
+                                            </button>
+                                            <a class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i> Batalkan Transaksi</a>
                                         </td>
+                                        <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
+                                            @csrf
+                                            <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="status" value="proses">
+                                            <input type="hidden" name="is_complete" value="0">
+                                        </form>
                                     </tr>
+
+                                    <div class="modal fade" id="bukti{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+                                                    <button type="button" class="btn-close bg-close text-danger bg-transparent" style="border: none;" data-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{ asset('drive/transfer/'. $data->payment_image) }}" alt="bukti transfer" class="img-fluid">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -75,27 +116,29 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    document.querySelectorAll('.delete-button').forEach(button => {
+    document.querySelectorAll('.proses').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
 
-            const nama = this.getAttribute('data-nama');
-            const deleteUrl = this.getAttribute('href');
+            const form = document.getElementById('proses-form');
+            const confirmationMessage = 'Ingin melanjutkan proses ini';
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: `Anda akan menghapus users : ${nama}`,
-                icon: 'warning',
+                text: confirmationMessage,
+                icon: 'info',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!'
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Lanjutkan!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = deleteUrl;
+                    // Submit the form using JavaScript
+                    form.submit();
                 }
             });
         });
     });
 </script>
+
 @endsection

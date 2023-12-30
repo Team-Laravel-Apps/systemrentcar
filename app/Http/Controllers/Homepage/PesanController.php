@@ -61,7 +61,18 @@ class PesanController extends Controller
             return redirect()->back();
         }
 
-        // dd($totalbiaya);
+        $cektransaksi = Rental::where('id_pelanggan', auth()->user()->id)
+        ->where('status_rental', 'pending')
+        ->orWhere('status_rental', 'proses')
+        ->orWhere('status_rental', 'selesai')
+        ->first();
+
+        if($cektransaksi)
+        {
+            Alert::warning('Opps', 'lakukan pemesanan kembali setelah penyewaan anda berakhir');
+            return redirect()->back();
+        }
+
         $pesan = Rental::updateOrCreate(['car_id' => $request['car_id']], [
             'id'            => $lastid,
             'id_rental'     => $kode,
@@ -71,7 +82,7 @@ class PesanController extends Controller
             'end_date'      => $request->end_date,
             'qty'           => 1,
             'biaya'         => $totalbiaya,
-            'status_rental' => 'proses',
+            'status_rental' => 'pending',
         ]);
 
         $pesan = Transaction::create([
@@ -90,7 +101,11 @@ class PesanController extends Controller
     public function payment($id_transaction)
     {
         $data = [
-            'pay' => Transaction::where('id_transaction', $id_transaction)->first(),
+            'pay' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
+            ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
+            ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+            ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
+            ->where('transactions.id_transaction', $id_transaction)->first(),
         ];
         return view('homepage.checkout', $data);
     }
@@ -137,11 +152,13 @@ class PesanController extends Controller
     public function delete(Request $request, $id_rental)
     {
         $cek = Rental::where('id_rental',  $id_rental)->first();
+        $trx = Transaction::where('id_rental',  $id_rental)->first();
 
         if($cek)
         {
             Rental::where('id_rental', $id_rental)->delete();
             Transaction::where('id_rental', $id_rental)->delete();
+            Payment::where('id_transaction', $trx->id_transaction)->delete();
             Alert::success('Berhasil', 'Produk berhasil dihapus dari keranjang');
             return redirect()->back();
         }else{

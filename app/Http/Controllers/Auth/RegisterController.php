@@ -20,14 +20,12 @@ class RegisterController extends Controller
     public function posts(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'            => 'required|unique:users,nama,' . ($request['id'] ?? '') . ',id',
             'username'        => 'required|unique:users,username,' . ($request['id'] ?? '') . ',id',
             'email'           => 'required|unique:users,email,' . ($request['id'] ?? '') . ',id',
             'no_telpon'       => 'required',
             'password'        => ($request->aksi == 'Update users' ? 'nullable' : 'required'),
         ], [
             'nama.required'         => 'Nama tidak boleh kosong!',
-            'nama.unique'           => 'Data tidak boleh sama!',
             'email.unique'          => 'Data tidak boleh sama!',
             'username.required'     => 'Username tidak boleh kosong!',
             'username.unique'       => 'Data tidak boleh sama!',

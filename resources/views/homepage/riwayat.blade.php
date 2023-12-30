@@ -26,17 +26,25 @@
                                 <div class="col-lg-12">
                                     <a href="{{ route('detail.produk', $item->id) }}" style="text-decoration: none; color: black;">
                                         <span class="text-secondary">{{ $item->category }}</span>
-                                        <span class="badge" style="background: rgb(2, 59, 124);;">Proses <i class="bi bi-arrow-clockwise"></i></span>
+                                        @if($item->status_rental == "pending")
+                                            <span class="badge" style="background: rgb(255, 162, 0);">Pending <i class="bi bi-hourglass-split"></i></span>
+                                        @elseif($item->status_rental == "proses")
+                                            <span class="badge" style="background: rgb(2, 59, 124);">Proses <i class="bi bi-arrow-clockwise"></i></span>
+                                        @else
+                                            <span class="badge" style="background: rgb(2, 91, 5);">Berhasil <i class="bi bi-question"></i></span>
+                                        @endif
+
+
                                         <h5 class="mb-1">{{ $item->nama_kendaraan }}</h5>
                                         <p class="text-dark mb-1" style="font-size: 20px;">@currency($item->biaya_sewa)</p>
                                     </a>
                                 </div>
 
                                 <div class="col-lg-12 col-12">
-                                    @if($item->payment_date == null)
+                                    @if($item->status_rental == "pending")
                                         <a href="{{ route('payment', $item->id_transaction) }}" class="btn btn-sm text-white" style="background: rgb(2, 59, 124);">Payment <i class="bi bi-cash"></i></a>
-                                    @elseif($item->is_complete == 0)
-                                        <a href="{{ route('payment', $item->id_transaction) }}" class="btn btn-sm text-white" style="background: rgb(237, 191, 3);">Menunggu <i class="bi bi-hourglass-split"></i></a>
+                                    @elseif($item->status_rental == "proses")
+                                        <a href="{{ route('payment', $item->id_transaction) }}" class="btn btn-sm text-white" style="background: rgb(2, 91, 5);">Detail Transaksi <i class="bi bi-car-front-fill"></i></a>
                                     @else
                                         <a href="{{ route('payment', $item->id_transaction) }}" class="btn btn-sm text-white" style="background: rgb(2, 91, 5);">Transaksi Berhasil <i class="bi bi-patch-check-fill"></i></a>
                                     @endif

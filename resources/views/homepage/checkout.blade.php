@@ -50,12 +50,22 @@
 
                             </div>
                         </div>
-                        @else
+                        @elseif($pay->status_rental == "pending")
                         <div class="p-5 mb-3">
                             <div class="text-center mb-3">
                                 <img src="{{ asset('assets/img/proses.gif') }}" alt="" width="400" class="img-fluid mb-0">
                                 <h5 class="h3 text-gray-900 mb-2 mt-2">Memproses Pembayaran</h5>
                                 <p>Menunggu Pembayaran di proses oleh admin kami...</p>
+                                <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
+                            </div>
+                        </div>
+                        @elseif($pay->status_rental == "proses")
+                        <div class="p-5 mb-3">
+                            <div class="text-center mb-3">
+                                <img src="{{ asset('assets/img/success.gif') }}" alt="" width="300" class="img-fluid mb-0">
+                                <h5 class="h3 text-gray-900 mb-2 mt-2">Pembayaran Telah Diterima</h5>
+                                <p>Silakan cetak invoice dibawah ini untuk melanjutkan serah terima kendaraan</p>
+                                <a href="{{ route('invoice.pelanggan', $pay->id_transaction) }}" class="btn text-white" style="background: rgb(6, 105, 4);">Invoice</a>
                                 <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
                             </div>
                         </div>

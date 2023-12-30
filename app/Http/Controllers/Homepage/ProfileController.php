@@ -20,7 +20,6 @@ class ProfileController extends Controller
     public function posts(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'            => 'required|unique:users,nama,' . ($request['id'] ?? '') . ',id',
             'username'        => 'required|unique:users,username,' . ($request['id'] ?? '') . ',id',
             'email'           => 'required|unique:users,email,' . ($request['id'] ?? '') . ',id',
             'profile'         => 'file|mimes:jpeg,bmp,png,gif|max:2000',
@@ -31,7 +30,6 @@ class ProfileController extends Controller
             'password'        => ($request->aksi == 'Update profile' ? 'nullable' : 'required'),
         ], [
             'nama.required'         => 'Nama tidak boleh kosong!',
-            'nama.unique'           => 'Data tidak boleh sama!',
             'email.unique'          => 'Data tidak boleh sama!',
             'username.required'     => 'Username tidak boleh kosong!',
             'username.unique'       => 'Data tidak boleh sama!',

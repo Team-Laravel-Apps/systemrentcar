@@ -17,7 +17,6 @@ class RiwayatController extends Controller
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
-            ->where('status_rental', 'proses')
             ->where('id_pelanggan', $id)
             ->get()
         ];

@@ -7,7 +7,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
+
 use App\Models\Rental;
+use App\Models\Transaction;
 
 class TransaksiController extends Controller
 {
@@ -33,7 +35,7 @@ class TransaksiController extends Controller
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
-            ->where('status_rental', 'pendding')
+            ->where('status_rental', 'pending')
             ->get()
         ];
 
@@ -68,6 +70,22 @@ class TransaksiController extends Controller
         return view('transaksi.batal', $data);
     }
 
+    public function approvel(Request $request)
+    {
+        $aprovel = Rental::updateOrCreate(['id_rental' => $request['id_rental']], [
+            'status_rental' => $request->status,
+        ]);
+
+        $aprovel = Transaction::updateOrCreate(['id_rental' => $request['id_rental']], [
+            'is_complete' => $request->is_complete,
+        ]);
+
+        if($aprovel)
+        {
+            Alert::success('Berhasil', $request->aksi);
+            return redirect()->back();
+        }
+    }
 
     public function laporan()
     {

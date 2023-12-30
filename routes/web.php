@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function(){
     Route::post("users/post", [UsersController::class, "posts"])->name('posts.users');
     Route::post("kategori/post", [CategoriesController::class, "posts"])->name('posts.kategori');
     Route::post("cars/post", [CarController::class, "posts"])->name('posts.car');
+    Route::post("transaksi/proses/post", [TransaksiController::class, "approvel"])->name('approvel.transaksi');
 });
 
 
@@ -108,6 +109,7 @@ Route::middleware('auth')->group(function(){
     Route::get("/riwayat/{id}", [RiwayatController::class, "index"])->name("riwayat");
     Route::get("/checkout/{id_transaction}", [PesanController::class, "index"])->name("checkout");
     Route::get("/payment/{id_transaction}", [PesanController::class, "payment"])->name("payment");
+    Route::get("/invoice/{id_transaction}", [InvoiceController::class, "InvoicePelanggan"])->name("invoice.pelanggan");
 
     Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");

@@ -115,7 +115,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     @csrf
-                                                    <input type="email" name="email" class="form-control p-3 @error('email') is-invalid @enderror" placeholder="Email anda" autocomplete="off" value="{{ old('nama') }}">
+                                                    <input type="text" name="email" class="form-control p-3 @error('email') is-invalid @enderror" placeholder="Email anda" autocomplete="off" value="{{ old('email') }}">
                                                     @error('email')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
@@ -162,7 +162,7 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-block p-2 text-white" style="background: rgb(2, 59, 124);">
-                                            Login
+                                            Register
                                         </button>
                                     </form>
 

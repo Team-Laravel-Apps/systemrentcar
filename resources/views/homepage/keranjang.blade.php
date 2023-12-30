@@ -5,7 +5,7 @@
         <div class="col-lg-12 mb-3">
             <nav class="navbar navbar-light" style="background: rgb(2, 59, 124);">
                 <div class="container-fluid">
-                    <p class="navbar-brand mb-0 text-white">Rental Saya ({{ $rental->count() }})</p>
+                    <p class="navbar-brand mb-0 text-white">Keranjang Saya ({{ $rental->count() }})</p>
                 </div>
             </nav>
         </div>

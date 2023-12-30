@@ -17,7 +17,7 @@ class KeranjangController extends Controller
             'rental' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
-            ->where('status_rental', 'pendding')
+            ->where('status_rental', 'simpan')
             ->where('id_pelanggan', $id)
             ->get()
         ];
@@ -43,7 +43,7 @@ class KeranjangController extends Controller
             'start_date'    => null,
             'end_date'      => null,
             'biaya'         => $request->biaya,
-            'status_rental' => 'pendding',
+            'status_rental' => 'simpan',
         ]);
 
 

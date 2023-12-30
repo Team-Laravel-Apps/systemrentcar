@@ -28,13 +28,13 @@
 
         .icon-keranjang {
             font-size: 24px;
-            color: rgb(18, 72, 0);
+            color: rgb(255, 153, 0);
             position: relative;
         }
 
         .notif-keranjang {
             font-size: 10px;
-            background-color:rgb(18, 72, 0);
+            background-color:rgb(255, 153, 0);
             color: #fff;
             border-radius: 50%;
             padding: 2px 6px;

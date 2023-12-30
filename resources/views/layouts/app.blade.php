@@ -80,17 +80,17 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#datatransaksi"
+                <a class="nav-link {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#datatransaksi"
                     aria-expanded="true" aria-controls="datatransaksi">
                     <i class="bi bi-credit-card-fill" style="font-size: 15px;"></i>
                     <span>Transaksi Customer</span>
                 </a>
-                <div id="datatransaksi" class="collapse {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="datatransaksi" class="collapse {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ Route::is('transaksi.pendding') ? 'active' : '' }}" href="{{ route('transaksi.pendding') }}">Transaksi Pending</a>
                         <a class="collapse-item {{ Route::is('transaksi.proses') ? 'active' : '' }}" href="{{ route('transaksi.proses') }}">Transaksi Proses</a>
-                        <a class="collapse-item {{ Route::is('transaksi.pendding') ? 'active' : '' }}" href="{{ route('transaksi.pendding') }}">Transaksi Pendding</a>
                         <a class="collapse-item {{ Route::is('transaksi.selesai') ? 'active' : '' }}" href="{{ route('transaksi.selesai') }}">Transaksi Selesai</a>
-                        <a class="collapse-item {{ Route::is('transaksi.selesai') ? 'active' : '' }}" href="{{ route('transaksi.batal') }}">Transaksi Dibatalkan</a>
+                        <a class="collapse-item {{ Route::is('transaksi.batal') ? 'active' : '' }}" href="{{ route('transaksi.batal') }}">Transaksi Dibatalkan</a>
                     </div>
                 </div>
             </li>
