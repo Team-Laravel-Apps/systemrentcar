@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
@@ -28,18 +29,19 @@ class TransaksiController extends Controller
         return view('transaksi.proses', $data);
     }
 
-    public function pendding()
+    public function pending()
     {
         $data = [
-            'pendding' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
+            'pending' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
+            ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
             ->where('status_rental', 'pending')
             ->get()
         ];
 
-        return view('transaksi.pendding', $data);
+        return view('transaksi.pending', $data);
     }
 
     public function selesai()
@@ -49,6 +51,7 @@ class TransaksiController extends Controller
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
+            ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
             ->where('status_rental', 'selesai')
             ->get()
         ];
@@ -79,6 +82,19 @@ class TransaksiController extends Controller
         $aprovel = Transaction::updateOrCreate(['id_rental' => $request['id_rental']], [
             'is_complete' => $request->is_complete,
         ]);
+
+        if($request->status == "batal")
+        {
+            $cek = Payment::where('id_rental', $request['id_rental'])->first();
+            $filePath = public_path('drive/kategori' . '/' . $cek->payment_image);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            } else {
+                    // Handle the case where the file doesn't exist if necessary
+            }
+            $aprovel = Transaction::where('id_rental', $request['id_rental'])->delete();
+            $aprovel = Payment::where('id_rental', $request['id_rental'])->delete();
+        }
 
         if($aprovel)
         {

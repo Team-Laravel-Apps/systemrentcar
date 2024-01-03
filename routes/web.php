@@ -62,13 +62,14 @@ Route::middleware('auth')->group(function(){
     Route::get("/data-kendaraan/up/{id}", [CarController::class, "update"])->name("up.mobil");
 
     Route::get("/pelanggan", [PelangganController::class, "index"])->name("pelanggan");
-    Route::get("/transaksi/pendding", [TransaksiController::class, "pendding"])->name("transaksi.pendding");
+    Route::get("/transaksi/pending", [TransaksiController::class, "pending"])->name("transaksi.pending");
     Route::get("/transaksi/proses", [TransaksiController::class, "proses"])->name("transaksi.proses");
     Route::get("/transaksi/selesai", [TransaksiController::class, "selesai"])->name("transaksi.selesai");
     Route::get("/transaksi/dibatalkan", [TransaksiController::class, "batal"])->name("transaksi.batal");
 
     Route::get("/transaksi/laporan", [TransaksiController::class, "laporan"])->name("transaksi.laporan");
     Route::get("/transaksi/invoice", [InvoiceController::class, "index"])->name("invoice");
+    Route::get("/invoice/print/{id_transaction}", [InvoiceController::class, "InvoicePrint"])->name("invoice.print");
 });
 
 

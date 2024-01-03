@@ -68,15 +68,16 @@
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
                                         <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ $data->start_date }}</td>
-                                        <td>{{ $data->end_date }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->start_date)->isoFormat('LL') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</td>
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
                                             <button class="btn btn-sm btn-success proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
-                                                <i class="bi bi-check-lg"></i> Selesaikan Transaksi
+                                                <i class="bi bi-check-lg"></i>
                                             </button>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-cash"></i></a>
                                         </td>
                                         <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf

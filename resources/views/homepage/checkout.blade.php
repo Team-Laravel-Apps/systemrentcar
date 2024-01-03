@@ -44,6 +44,7 @@
                                     </div>
 
                                     <div class="col-lg-12 mb-0">
+                                        <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
                                         <button type="submit" class="btn text-white" style="background: rgb(2, 59, 124);">Upload <i class="bi bi-upload"></i></button>
                                     </div>
                                 </form>
@@ -69,6 +70,18 @@
                                 <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
                             </div>
                         </div>
+                        @elseif($pay->status_rental == "selesai")
+                        <div class="p-5 mb-3">
+                            <div class="text-center mb-3">
+                                <img src="{{ asset('assets/img/sewagif.gif') }}" alt="" width="300" class="img-fluid mb-0">
+                                <h5 class="h3 text-gray-900 mb-2 mt-2">Transaksi sewa mobil disetujui</h5>
+                                <p class="mb-4">Silakan lakukan pengembalian mobil pada waktu yang telah disepakati dan jika melanggar akan dikenakan denda <br> Rp. 100.000/hari</p>
+                                <p class="mb-0 text-center">Tanggal Pengembalian : {{ date('l, d F Y', strtotime($pay->end_date)) }}</p>
+                                <p class="text-center mb-5">Countdown : <span id="countdown"></span></p>
+                                <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
+                                <p class="text-center mb-0 mt-5">Selamat menikmati kendaraan kami :)</p>
+                            </div>
+                        </div>
                         @endif
                     </div>
                 </div>
@@ -76,4 +89,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Mendapatkan tanggal mulai dan tanggal berakhir dari PHP
+    const startDate = new Date("{{ $pay->start_date }}");
+    const endDate = new Date("{{ $pay->end_date }}");
+
+
+    // Fungsi untuk menghitung waktu yang tersisa dan memperbarui tampilan
+    function updateCountdown() {
+        var now = new Date();
+        var timeRemaining = endDate - now;
+
+        if (timeRemaining > 0) {
+            var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        } else {
+            document.getElementById("countdown").innerHTML = "Waktu sudah habis.";
+        }
+    }
+
+    // Memanggil fungsi updateCountdown setiap detik
+    setInterval(updateCountdown, 1000);
+
+    // Memanggil updateCountdown untuk pertama kali saat halaman dimuat
+    updateCountdown();
+</script>
 @endsection

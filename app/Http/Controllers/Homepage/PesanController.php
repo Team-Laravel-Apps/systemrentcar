@@ -23,6 +23,7 @@ class PesanController extends Controller
         }else{
             $data = [
                 'item' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+                ->join('tbl_rental', 'tbl_rental.car_id', '=', 'tbl_cars.id_car')
                 ->where('id_car', $id_car)->first()
             ];
             return view('homepage.pesan', $data);
@@ -45,7 +46,7 @@ class PesanController extends Controller
         }
 
         $lastid = $request['id'] ? $request['id'] : Rental::max('id') + 1;
-        $kode = 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
+        $kode = $request['id_rental'] ? $request['id_rental'] : 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
 
         $lastid1 = $request['id'] ? $request['id'] : Rental::max('id') + 1;
         $kodetrs = 'TRX' . str_pad($lastid1, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
@@ -73,7 +74,7 @@ class PesanController extends Controller
             return redirect()->back();
         }
 
-        $pesan = Rental::updateOrCreate(['car_id' => $request['car_id']], [
+        $pesan = Rental::updateOrCreate(['id_rental' => $request['id_rental']], [
             'id'            => $lastid,
             'id_rental'     => $kode,
             'id_pelanggan'  => auth()->user()->id,

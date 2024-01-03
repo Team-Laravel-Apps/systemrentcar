@@ -45,8 +45,7 @@
                                     <th>Nama Pelanggan</th>
                                     <th>Telepon</th>
                                     <th>Kendaraan</th>
-                                    <th>Start Penyewaan</th>
-                                    <th>End Penyewaan</th>
+                                    <th>Tgl. Sewa</th>
                                     <th>Lama Sewa</th>
                                     <th>Total Biaya</th>
                                     <th>Actions</th>
@@ -56,7 +55,7 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($pendding as $data)
+                                @foreach ($pending as $data)
                                     @php
                                         $start_date = new \DateTime($data->start_date);
                                         $end_date = new \DateTime($data->end_date);
@@ -64,24 +63,31 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $data->nama }}</td>
+                                        <td class="col-2">{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
-                                        <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ $data->start_date }}</td>
-                                        <td>{{ $data->end_date }}</td>
+                                        <td class="col-2">{{ $data->nama_kendaraan }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->start_date)->isoFormat('LL') }}</td>
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
                                             <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
-                                                <i class="bi bi-check-lg"></i> Lanjutkan Proses
+                                                <i class="bi bi-check-lg"></i>
                                             </button>
-                                            <a class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i> Batalkan Transaksi</a>
+                                            <button class="btn btn-sm btn-danger cancel" onclick="event.preventDefault(); document.getElementById('cancel-form');">
+                                                <i class="bi bi-x-lg"></i>
+                                            </button>
                                         </td>
                                         <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
                                             <input type="hidden" name="status" value="proses">
+                                            <input type="hidden" name="is_complete" value="0">
+                                        </form>
+                                        <form id="cancel-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
+                                            @csrf
+                                            <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="status" value="batal">
                                             <input type="hidden" name="is_complete" value="0">
                                         </form>
                                     </tr>
@@ -139,6 +145,35 @@
             });
         });
     });
+
+
+    document.querySelectorAll('.cancel').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('cancel-form');
+            const confirmationMessage = 'Ingin membatalkan proses ini';
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: confirmationMessage,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Batalkan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form using JavaScript
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 
 @endsection

@@ -28,14 +28,18 @@ class KeranjangController extends Controller
     public function posts(Request $request)
     {
         $lastid = $request['id'] ? $request['id'] : Rental::max('id') + 1;
-        $kode = 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
-        $cek = Rental::where('car_id', $request->car_id)->first();
+        $kode = $request['id_rental'] ? $request['id_rental'] : 'RENT' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
+
+        $cek = Rental::where('car_id', $request->car_id)
+        ->where('id_pelanggan', auth()->user()->id)
+        ->first();
+
         if($cek)
         {
             Alert::warning('Opps', 'Produk sudah berada di rental');
             return redirect()->back();
         }
-        $keranjang = Rental::updateOrCreate(['car_id' => $request['car_id']],[
+        $keranjang = Rental::updateOrCreate(['id_rental' => $request['id_rental']],[
             'id'            => $lastid,
             'id_rental'     => $kode,
             'id_pelanggan'  => auth()->user()->id,

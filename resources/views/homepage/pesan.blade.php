@@ -84,6 +84,7 @@
 
                         <div class="text-end">
                             <input type="hidden" name="car_id" value="{{ $item->id_car }}">
+                            <input type="hidden" name="id_rental" value="{{ $item->id_rental ?? ''}}">
                             <input type="hidden" name="biaya" value="{{ $item->biaya_sewa }}">
                             <button type="" class="btn text-white" style="background: rgb(2, 59, 124);">Checkout <i class="bi bi-send"></i></button>
                         </div>

@@ -41,21 +41,17 @@
                         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>ID Transaksi</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Telepon</th>
                                     <th>Kendaraan</th>
-                                    <th>Start Penyewaan</th>
-                                    <th>End Penyewaan</th>
+                                    <th>Tanggal Pengembalian</th>
                                     <th>Lama Sewa</th>
                                     <th>Total Biaya</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($selesai as $data)
                                     @php
                                         $start_date = new \DateTime($data->start_date);
@@ -63,19 +59,36 @@
                                         $hari = $start_date->diff($end_date)->days;
                                     @endphp
                                     <tr>
-                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $data->id_transaction }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
                                         <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ $data->start_date }}</td>
-                                        <td>{{ $data->end_date }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</td>
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
-                                            <a class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-receipt-cutoff"></i> Invoice</a>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-cash"></i></a>
                                         </td>
                                     </tr>
+
+                                    <div class="modal fade" id="bukti{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
+                                                    <button type="button" class="btn-close bg-close text-danger bg-transparent" style="border: none;" data-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{ asset('drive/transfer/'. $data->payment_image) }}" alt="bukti transfer" class="img-fluid">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
