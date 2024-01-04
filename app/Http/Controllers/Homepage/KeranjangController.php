@@ -19,6 +19,7 @@ class KeranjangController extends Controller
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
             ->where('status_rental', 'simpan')
             ->where('id_pelanggan', $id)
+            ->where('id_pelanggan', auth()->user()->id)
             ->get()
         ];
 

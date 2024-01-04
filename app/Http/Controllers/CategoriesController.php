@@ -13,7 +13,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $data = [
-            'kategori' => Category::all()
+            'kategori' => Category::orderBy('id_category', 'DESC')->get()
         ];
 
         return view('kategori', $data);

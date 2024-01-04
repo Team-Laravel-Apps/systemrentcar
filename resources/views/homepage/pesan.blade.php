@@ -18,14 +18,14 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12 col-4 mb-2">
-                                    <a href="{{ route('detail.produk', $item->id) }}" style="text-decoration: none; color: black;">
+                                    <a href="{{ route('detail.produk', $item->id_car) }}" style="text-decoration: none; color: black;">
                                         <img src="{{ asset('drive/cars/' . $item->img_kendaraan) }}" alt="Travel image" class="img-fluid" alt="{{$item->nama_kendaraan}}">
                                     </a>
                                 </div>
 
                                 <div class="col-md-12 col-12 row">
                                     <div class="col-lg-8 mb-2">
-                                        <a href="{{ route('detail.produk', $item->id) }}" style="text-decoration: none; color: black;">
+                                        <a href="{{ route('detail.produk', $item->id_car) }}" style="text-decoration: none; color: black;">
                                             <span class="text-secondary">{{ $item->category }}</span>
                                             <h5 class="mb-1">{{ $item->nama_kendaraan }}</h5>
                                             <p class="text-dark mb-1" style="font-size: 20px;">@currency($item->biaya_sewa)</p>
@@ -84,7 +84,6 @@
 
                         <div class="text-end">
                             <input type="hidden" name="car_id" value="{{ $item->id_car }}">
-                            <input type="hidden" name="id_rental" value="{{ $item->id_rental ?? ''}}">
                             <input type="hidden" name="biaya" value="{{ $item->biaya_sewa }}">
                             <button type="" class="btn text-white" style="background: rgb(2, 59, 124);">Checkout <i class="bi bi-send"></i></button>
                         </div>

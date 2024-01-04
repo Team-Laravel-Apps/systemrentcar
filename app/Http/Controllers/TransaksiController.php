@@ -53,6 +53,7 @@ class TransaksiController extends Controller
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
             ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
             ->where('status_rental', 'selesai')
+            ->orWhere('status_rental', 'dikembalikan')
             ->get()
         ];
 
@@ -65,12 +66,29 @@ class TransaksiController extends Controller
             'batal' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
             ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
             ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
-            ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
             ->where('status_rental', 'batal')
             ->get()
         ];
 
         return view('transaksi.batal', $data);
+    }
+
+    public function pengembalian()
+    {
+        $data = [
+            'pengembalian' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
+            ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
+            ->join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+            ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
+            ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
+            ->where('status_rental', 'selesai')
+            ->orWhere('status_rental', 'dikembalikan')
+            ->get(),
+
+            'count' => Rental::where('status_rental', 'dikembalikan')->count()
+        ];
+
+        return view('transaksi.pengembalian', $data);
     }
 
     public function approvel(Request $request)
@@ -85,7 +103,7 @@ class TransaksiController extends Controller
 
         if($request->status == "batal")
         {
-            $cek = Payment::where('id_rental', $request['id_rental'])->first();
+            $cek = Payment::where('id_transaction', $request['id_transaction'])->first();
             $filePath = public_path('drive/kategori' . '/' . $cek->payment_image);
             if (file_exists($filePath)) {
                 unlink($filePath);
@@ -93,7 +111,7 @@ class TransaksiController extends Controller
                     // Handle the case where the file doesn't exist if necessary
             }
             $aprovel = Transaction::where('id_rental', $request['id_rental'])->delete();
-            $aprovel = Payment::where('id_rental', $request['id_rental'])->delete();
+            $aprovel = Payment::where('id_transaction', $request['id_transaction'])->delete();
         }
 
         if($aprovel)

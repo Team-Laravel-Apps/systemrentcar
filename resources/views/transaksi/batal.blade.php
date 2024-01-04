@@ -43,9 +43,10 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pelanggan</th>
-                                    <th>Telpon</th>
-                                    <th>Alamat</th>
-                                    <th>Actions</th>
+                                    <th>Telepon</th>
+                                    <th>Kendaraan</th>
+                                    <th>Total Biaya</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,42 +54,16 @@
                                     $no = 1;
                                 @endphp
                                 @foreach ($batal as $data)
-                                    @php
-                                        $start_date = new \DateTime($data->start_date);
-                                        $end_date = new \DateTime($data->end_date);
-                                        $hari = $start_date->diff($end_date)->days;
-                                    @endphp
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $data->nama }}</td>
+                                        <td class="col-2">{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
-                                        <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ $data->start_date }}</td>
-                                        <td>{{ $data->end_date }}</td>
-                                        <td>{{ $hari }} Hari</td>
+                                        <td class="col-2">{{ $data->nama_kendaraan }}</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i> Bukti Transfer</a>
+                                            <a class="btn btn-sm btn-danger">Dibatalkan <i class="bi bi-x-lg"></i></a>
                                         </td>
                                     </tr>
-
-                                    <div class="modal fade" id="bukti{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
-                                                    <button type="button" class="btn-close bg-close text-danger bg-transparent" style="border: none;" data-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ asset('drive/transfer/'. $data->payment_image) }}" alt="bukti transfer" class="img-fluid">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

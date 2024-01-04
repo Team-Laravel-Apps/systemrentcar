@@ -66,9 +66,9 @@ Route::middleware('auth')->group(function(){
     Route::get("/transaksi/proses", [TransaksiController::class, "proses"])->name("transaksi.proses");
     Route::get("/transaksi/selesai", [TransaksiController::class, "selesai"])->name("transaksi.selesai");
     Route::get("/transaksi/dibatalkan", [TransaksiController::class, "batal"])->name("transaksi.batal");
+    Route::get("/transaksi/pengembalian", [TransaksiController::class, "pengembalian"])->name("transaksi.pengembalian");
 
     Route::get("/transaksi/laporan", [TransaksiController::class, "laporan"])->name("transaksi.laporan");
-    Route::get("/transaksi/invoice", [InvoiceController::class, "index"])->name("invoice");
     Route::get("/invoice/print/{id_transaction}", [InvoiceController::class, "InvoicePrint"])->name("invoice.print");
 });
 
@@ -88,6 +88,8 @@ Route::middleware('auth')->group(function(){
     Route::get('role/delete/{id_role}', [RoleController::class, 'delete'])->name('delete.role');
     Route::get('usersmanager/delete/{id}', [UsersController::class, 'delete'])->name('delete.users');
     Route::get('kategori/delete/{id_category}', [CategoriesController::class, 'delete'])->name('delete.kategori');
+    Route::get('cars/delete/{id}', [CarController::class, 'delete'])->name('delete.cars');
+    Route::get('cars/pelanggan/{id}', [PelangganController::class, 'delete'])->name('delete.pelanggan');
 
 
     //Post and Update
@@ -108,11 +110,11 @@ Route::get("/kontak", [KontakController::class, "index"])->name("kontak");
 Route::middleware('auth')->group(function(){
     Route::get("/rental/{id}", [KeranjangController::class, "index"])->name("keranjang");
     Route::get("/riwayat/{id}", [RiwayatController::class, "index"])->name("riwayat");
-    Route::get("/checkout/{id_transaction}", [PesanController::class, "index"])->name("checkout");
+    Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
     Route::get("/payment/{id_transaction}", [PesanController::class, "payment"])->name("payment");
     Route::get("/invoice/{id_transaction}", [InvoiceController::class, "InvoicePelanggan"])->name("invoice.pelanggan");
 
-    Route::get("produk-kami/detail/{id}", [ProdukController::class, "detail"])->name("detail.produk");
+    Route::get("produk-kami/detail/{id_car}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");
     Route::get("produk-kami/{id_category}", [SearchController::class, "category"])->name("category.produk");
     Route::get("/myprofile", [ProfileController::class, "index"])->name("myprofile");

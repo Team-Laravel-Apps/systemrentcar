@@ -88,7 +88,7 @@
             @foreach ($car as $data)
             <div class="col-xxl-3 col-lg-4 col-md-6 mb-3">
                 <div class="card shadow">
-                    <a href="{{ route('detail.produk', $data->id) }}" style="text-decoration: none; color: black;">
+                    <a href="{{ route('detail.produk', $data->id_car) }}" style="text-decoration: none; color: black;">
                         <img src="{{ asset('drive/cars/'. $data->img_kendaraan) }}" class="card-img-top" alt="{{ $data->nama_kendaraan ?? 'tidak ada' }}" style="background-size: cover; background-position: center; min-height: 220px; max-width: 100%; object-fit: content;">
                         <div class="card-body">
                             <div class="row">

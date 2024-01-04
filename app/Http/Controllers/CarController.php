@@ -14,7 +14,7 @@ class CarController extends Controller
     public function index()
     {
         $data = [
-            'mobil' => Cars::all()
+            'mobil' => Cars::orderBy('id', 'DESC')->get()
         ];
 
         return view('mobil', $data);
@@ -106,6 +106,7 @@ class CarController extends Controller
         $lastid = $request['id'] ? $request['id'] : Cars::max('id') + 1;
         $idcar = 'MBM' . str_pad($lastid, 2, '0', STR_PAD_LEFT) . sprintf('%03d', rand(1, 999));
         $set = Cars::updateOrCreate(['id' => $request['id']], [
+            'id'                => $lastid,
             'id_car'            => $idcar,
             'img_kendaraan'     => $files,
             'id_category'       => $request['id_category'] == '' ? null : $request['id_category'],
@@ -134,5 +135,29 @@ class CarController extends Controller
     }
 
 
+    public function delete(Request $request, $id)
+    {
+        $cek = Cars::where('id', $id)->first();
 
+        if($cek)
+        {
+            if($cek->img_kendaraan == null)
+            {
+
+            }else{
+                $filePath = public_path('drive/cars' . '/' . $cek->img_kendaraan);
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                } else {
+                    // Handle the case where the file doesn't exist if necessary
+                }
+            }
+            Cars::where('id', $id)->delete();
+            Alert::success('Berhasil', 'Katalog mobil berhasil dihapus');
+            return redirect()->back();
+        }else{
+            Alert::error('Gagal', 'Katalog mobil gagal dihapus');
+            return redirect()->back();
+        }
+    }
 }

@@ -80,34 +80,29 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#datatransaksi"
+                <a class="nav-link {{ Route::is('transaksi.pending', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal') ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#datatransaksi"
                     aria-expanded="true" aria-controls="datatransaksi">
                     <i class="bi bi-credit-card-fill" style="font-size: 15px;"></i>
                     <span>Transaksi Customer</span>
                 </a>
-                <div id="datatransaksi" class="collapse {{ Route::is('transaksi.pendding', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="datatransaksi" class="collapse {{ Route::is('transaksi.pending', 'transaksi.proses', 'transaksi.selesai', 'transaksi.batal', 'transaksi.pengembalian') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ Route::is('transaksi.pendding') ? 'active' : '' }}" href="{{ route('transaksi.pendding') }}">Transaksi Pending</a>
+                        <a class="collapse-item {{ Route::is('transaksi.pending') ? 'active' : '' }}" href="{{ route('transaksi.pending') }}">Transaksi Pending</a>
                         <a class="collapse-item {{ Route::is('transaksi.proses') ? 'active' : '' }}" href="{{ route('transaksi.proses') }}">Transaksi Proses</a>
                         <a class="collapse-item {{ Route::is('transaksi.selesai') ? 'active' : '' }}" href="{{ route('transaksi.selesai') }}">Transaksi Selesai</a>
                         <a class="collapse-item {{ Route::is('transaksi.batal') ? 'active' : '' }}" href="{{ route('transaksi.batal') }}">Transaksi Dibatalkan</a>
+                        <a class="collapse-item {{ Route::is('transaksi.pengembalian') ? 'active' : '' }}" href="{{ route('transaksi.pengembalian') }}">Pengembalian</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item {{ Route::is('transaksi.laporan') ? 'active' : '' }}">
+            <li class="nav-item mb-4 {{ Route::is('transaksi.laporan') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('transaksi.laporan') }}">
                     <i class="bi bi-file-earmark-text-fill"></i>
                     <span>Laporan Transaksi</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item {{ Route::is('invoice') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('invoice') }}" style="font-size: 15px;">
-                    <i class="bi bi-receipt"></i>
-                    <span>Invoice Pelanggan</span></a>
-            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

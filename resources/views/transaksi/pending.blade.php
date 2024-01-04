@@ -22,7 +22,7 @@
                             <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                                 Transaksi pending
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pendding->count() }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pending->count() }}</div>
                         </div>
 
                     </div>
@@ -41,7 +41,7 @@
                         <table class="table table-striped" id="dataTable" width="100%" cellspacing="0" style="font-size: 14px;">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>ID Transaksi</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Telepon</th>
                                     <th>Kendaraan</th>
@@ -62,7 +62,7 @@
                                         $hari = $start_date->diff($end_date)->days;
                                     @endphp
                                     <tr>
-                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $data->id_transaction }}</td>
                                         <td class="col-2">{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
                                         <td class="col-2">{{ $data->nama_kendaraan }}</td>
@@ -87,6 +87,7 @@
                                         <form id="cancel-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="id_transaction" value="{{ $data->id_transaction }}">
                                             <input type="hidden" name="status" value="batal">
                                             <input type="hidden" name="is_complete" value="0">
                                         </form>

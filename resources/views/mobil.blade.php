@@ -74,7 +74,7 @@
                                     <td class="align-middle">
                                         <div class="d-flex">
                                             <a href="{{ route('up.mobil', $data->id) }}" class="btn btn-sm btn-primary mr-2"><i class="bi bi-pencil-fill"></i> Edit</a>
-                                            <a href="{{ route('delete.kategori', $data->id) }}" data-nama="{{ $data->nama_kendaraan }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
+                                            <a href="{{ route('delete.cars', $data->id) }}" data-nama="{{ $data->nama_kendaraan }}" class="btn btn-sm btn-danger delete-button"><i class="bi bi-trash-fill"></i> Hapus</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -101,7 +101,7 @@
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: `Anda akan menghapus kategori : ${nama}`,
+                text: `Anda akan menghapus katalog mobil : ${nama}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

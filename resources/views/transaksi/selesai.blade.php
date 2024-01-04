@@ -57,18 +57,27 @@
                                         $start_date = new \DateTime($data->start_date);
                                         $end_date = new \DateTime($data->end_date);
                                         $hari = $start_date->diff($end_date)->days;
+
+                                        $outdate = new \DateTime(now());
+                                        $expired = $end_date->diff($outdate)->days;
                                     @endphp
                                     <tr>
                                         <td>{{ $data->id_transaction }}</td>
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
                                         <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</td>
+                                        <td>
+                                            @if($data->end_date < now())
+                                                <span class="badge badge-danger" style="font-size: 13px;">Expired {{ $expired }} hari</span>
+                                            @else
+                                                <span class="badge badge-primary" style="font-size: 13px;">{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
                                             <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-cash"></i></a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
                                         </td>
                                     </tr>
 

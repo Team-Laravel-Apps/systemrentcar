@@ -42,21 +42,17 @@
                             style="font-size: 14px;">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>ID Transaksi</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Telepon</th>
                                     <th>Kendaraan</th>
-                                    <th>Start Penyewaan</th>
-                                    <th>End Penyewaan</th>
+                                    <th>Pengembalian</th>
                                     <th>Lama Sewa</th>
                                     <th>Total Biaya</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($proses as $data)
                                     @php
                                         $start_date = new \DateTime($data->start_date);
@@ -64,20 +60,19 @@
                                         $hari = $start_date->diff($end_date)->days;
                                     @endphp
                                     <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $data->nama }}</td>
+                                        <td>{{ $data->id_transaction }}</td>
+                                        <td class="col-2">{{ $data->nama }}</td>
                                         <td>{{ $data->no_telpon }}</td>
-                                        <td>{{ $data->nama_kendaraan }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($data->start_date)->isoFormat('LL') }}</td>
+                                        <td class="col-2">{{ $data->nama_kendaraan }}</td>
                                         <td>{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</td>
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
                                             <button class="btn btn-sm btn-success proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
                                                 <i class="bi bi-check-lg"></i>
                                             </button>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-cash"></i></a>
+                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
+                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
                                         </td>
                                         <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf

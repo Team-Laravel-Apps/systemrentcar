@@ -17,9 +17,13 @@ class UsersController extends Controller
         $data = [
             'user' => User::join('roles', 'roles.id_role', '=', 'users.id_role')
             ->where('users.id', '!=', auth()->user()->id)
+            ->where('users.id_role', '!=', 3)
+            ->orderBy('users.id', 'DESC')
             ->get(),
 
-            'count' => User::join('roles', 'roles.id_role', '=', 'users.id_role')->get(),
+            'count' => User::join('roles', 'roles.id_role', '=', 'users.id_role')
+            ->where('users.id_role', '!=', 3)
+            ->get(),
 
             'role' => Role::all(),
         ];
@@ -51,7 +55,7 @@ class UsersController extends Controller
     public function posts(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'            => 'required|unique:users,nama,' . ($request['id'] ?? '') . ',id',
+            'nama'            => 'required',
             'username'        => 'required|unique:users,username,' . ($request['id'] ?? '') . ',id',
             'email'           => 'required|unique:users,email,' . ($request['id'] ?? '') . ',id',
             'profile'         => 'file|mimes:jpeg,bmp,png,gif|max:2000',
@@ -132,10 +136,10 @@ class UsersController extends Controller
 
         if ($set) {
             Alert::success('Berhasil', $request->aksi.' berhasil dilakukan');
-            if ($request->aksi = 'Update users') {
-                return redirect()->back();
-            } else {
+            if ($request->aksi == 'Tambah users') {
                 return redirect()->route('users');
+            } else {
+                return redirect()->back();
             }
         } else {
             Alert::error('Gagal', $request->aksi.' gagal dilakukan');

@@ -23,10 +23,12 @@ class ProdukController extends Controller
         return view('homepage.produk', $data);
     }
 
-    public function detail($id)
+    public function detail($id_car)
     {
         $data = [
-            'detail'       => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')->find($id)
+            'detail'  => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
+            ->where('id_car', $id_car)
+            ->first()
         ];
 
         return view('homepage.detailproduk', $data);

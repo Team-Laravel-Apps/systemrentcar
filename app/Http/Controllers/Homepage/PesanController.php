@@ -23,8 +23,8 @@ class PesanController extends Controller
         }else{
             $data = [
                 'item' => Cars::join('categories', 'categories.id_category', '=', 'tbl_cars.id_category')
-                ->join('tbl_rental', 'tbl_rental.car_id', '=', 'tbl_cars.id_car')
-                ->where('id_car', $id_car)->first()
+                ->where('id_car', $id_car)
+                ->first()
             ];
             return view('homepage.pesan', $data);
         }
@@ -63,14 +63,15 @@ class PesanController extends Controller
         }
 
         $cektransaksi = Rental::where('id_pelanggan', auth()->user()->id)
-        ->where('status_rental', 'pending')
-        ->orWhere('status_rental', 'proses')
-        ->orWhere('status_rental', 'selesai')
+        ->where(function ($query) {
+            $query->where('status_rental', 'pending')
+                ->orWhere('status_rental', 'proses')
+                ->orWhere('status_rental', 'selesai');
+        })
         ->first();
 
-        if($cektransaksi)
-        {
-            Alert::warning('Opps', 'lakukan pemesanan kembali setelah penyewaan anda berakhir');
+        if ($cektransaksi) {
+            Alert::warning('Opps', 'Lakukan pemesanan kembali setelah penyewaan anda berakhir');
             return redirect()->back();
         }
 

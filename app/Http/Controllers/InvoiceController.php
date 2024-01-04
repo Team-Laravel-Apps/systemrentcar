@@ -8,12 +8,6 @@ use App\Models\Rental;
 
 class InvoiceController extends Controller
 {
-    public function index()
-    {
-        return view('invoice.invoice');
-    }
-
-
     public function InvoicePelanggan($id_transaction){
         $data = [
             'inv' => Rental::join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
