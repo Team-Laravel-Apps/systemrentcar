@@ -1,5 +1,17 @@
 @extends('layouts.homepage')
 @section('homepage')
+@php
+    $start_date = new \DateTime($pay->start_date);
+    $end_date = new \DateTime($pay->end_date);
+    $hari = $start_date->diff($end_date)->days;
+
+    $outdate = new \DateTime(now());
+    $expired = $end_date->diff($outdate)->days;
+
+    $extend = $start_date->diff($outdate)->days;
+
+    $denda = 100000 * $expired;
+@endphp
 <div class="container mt-3">
     <div class="row justify-content-center align-items-center" style="height: height: 100vh;">
         <div class="col-lg-5">
@@ -78,7 +90,10 @@
                                 <p class="mb-4">Silakan lakukan pengembalian mobil pada waktu yang telah disepakati dan jika melanggar akan dikenakan denda <br> Rp. 100.000/hari</p>
                                 <p class="mb-0 text-center">Tanggal Pengembalian : {{ date('l, d F Y', strtotime($pay->end_date)) }}</p>
                                 <p class="text-center mb-5">Countdown : <span id="countdown"></span></p>
-                                <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124);">Kembali ke home</a>
+                                <a href="{{ route('home') }}" class="btn text-white" style="background: rgb(2, 59, 124) ;">Kembali ke home</a>
+                                @if($expired)
+                                    <a href="{{ route('denda.pelanggan', $pay->id_transaction) }}" class="btn text-white" style="background: rgb(198, 1, 1);">Cek denda sekarang</a>
+                                @endif
                                 <p class="text-center mb-0 mt-5">Selamat menikmati kendaraan kami :)</p>
                             </div>
                         </div>

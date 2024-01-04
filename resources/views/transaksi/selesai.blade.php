@@ -76,8 +76,14 @@
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
+                                                <span class="tooltip-text">Bukti pembayaran</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-warning text-dark" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
+                                                <span class="tooltip-text">Invoice</span>
+                                            </div>
                                         </td>
                                     </tr>
 

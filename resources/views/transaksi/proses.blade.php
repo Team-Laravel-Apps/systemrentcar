@@ -68,16 +68,27 @@
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <button class="btn btn-sm btn-success proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
-                                                <i class="bi bi-check-lg"></i>
-                                            </button>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
+                                            <div class="tooltip-container">
+                                                <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                                <span class="tooltip-text">Selesaikan transaksi</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
+                                                <span class="tooltip-text">Bukti pembayaran</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-warning text-dark" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
+                                                <span class="tooltip-text">Invoice</span>
+                                            </div>
                                         </td>
                                         <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="id_car" value="{{ $data->id_car }}">
                                             <input type="hidden" name="status" value="selesai">
+                                            <input type="hidden" name="aksi" value="Menyelesaikan transaksi">
                                             <input type="hidden" name="is_complete" value="1">
                                         </form>
                                     </tr>
@@ -117,7 +128,7 @@
             event.preventDefault();
 
             const form = document.getElementById('proses-form');
-            const confirmationMessage = 'Ingin menyelessaikan proses ini';
+            const confirmationMessage = 'Ingin menyelesaikan proses ini';
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',

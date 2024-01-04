@@ -17,21 +17,21 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-5 col-5">
-                                <a href="{{ route('detail.produk', $item->id) }}" style="text-decoration: none; color: black;">
+                                <a href="{{ route('detail.produk', $item->id_car) }}" style="text-decoration: none; color: black;">
                                     <img src="{{ asset('drive/cars/' . $item->img_kendaraan) }}" alt="Travel image" class="img-fluid" alt="{{$item->nama_kendaraan}}">
                                 </a>
                             </div>
 
                             <div class="col-md-7 col-7 row g-1">
                                 <div class="col-lg-12">
-                                    <a href="{{ route('detail.produk', $item->id) }}" style="text-decoration: none; color: black;">
+                                    <a href="{{ route('detail.produk', $item->id_car) }}" style="text-decoration: none; color: black;">
                                         <span class="text-secondary">{{ $item->category }}</span>
                                         @if($item->status_rental == "pending")
                                             <span class="badge" style="background: rgb(255, 162, 0);">Pending <i class="bi bi-hourglass-split"></i></span>
                                         @elseif($item->status_rental == "proses")
                                             <span class="badge" style="background: rgb(2, 59, 124);">Proses <i class="bi bi-arrow-clockwise"></i></span>
                                         @else
-                                            <span class="badge" style="background: rgb(2, 91, 5);">Berhasil <i class="bi bi-question"></i></span>
+                                            <span class="badge" style="background: rgb(2, 91, 5);">Berhasil <i class="bi bi-patch-check-fill"></i></span>
                                         @endif
 
 
@@ -48,7 +48,12 @@
                                     @else
                                         <a href="{{ route('payment', $item->id_transaction) }}" class="btn btn-sm text-white" style="background: rgb(2, 91, 5);">Transaksi Berhasil <i class="bi bi-patch-check-fill"></i></a>
                                     @endif
-                                    <a href="{{ route('batal.transaksi', $item->id_rental) }}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
+
+                                    @if($item->status_rental == "proses" || $item->status_rental == "selesai" || $item->status_rental == "dikembalikan")
+                                    @else
+                                        <a href="{{ route('batal.transaksi', $item->id_rental) }}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></a>
+                                    @endif
+
                                 </div>
                             </div>
 

@@ -151,7 +151,7 @@
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: `Anda akan menghapus users : ${nama}`,
+                text: `Anda akan menghapus pelanggan : ${nama}`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

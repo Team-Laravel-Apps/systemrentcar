@@ -52,7 +52,6 @@ Route::middleware('auth')->group(function(){
     Route::get("/usersmanager/add", [UsersController::class, "create"])->name("add.users");
     Route::get("/usersmanager/up/{id}", [UsersController::class, "update"])->name("up.users");
 
-
     Route::get("/kategori", [CategoriesController::class, "index"])->name("kategori");
     Route::get("/kategori/add", [CategoriesController::class, "create"])->name("add.kategori");
     Route::get("/kategori/up/{id_category}", [CategoriesController::class, "update"])->name("up.kategori");
@@ -70,6 +69,7 @@ Route::middleware('auth')->group(function(){
 
     Route::get("/transaksi/laporan", [TransaksiController::class, "laporan"])->name("transaksi.laporan");
     Route::get("/invoice/print/{id_transaction}", [InvoiceController::class, "InvoicePrint"])->name("invoice.print");
+    Route::get("/denda/print/{id_transaction}", [InvoiceController::class, "dendaPrint"])->name("denda.print");
 });
 
 
@@ -97,6 +97,7 @@ Route::middleware('auth')->group(function(){
     Route::post("kategori/post", [CategoriesController::class, "posts"])->name('posts.kategori');
     Route::post("cars/post", [CarController::class, "posts"])->name('posts.car');
     Route::post("transaksi/proses/post", [TransaksiController::class, "approvel"])->name('approvel.transaksi');
+    Route::post("transaksi/pengembalian/post", [TransaksiController::class, "diterima"])->name('diterima.transaksi');
 });
 
 
@@ -113,6 +114,7 @@ Route::middleware('auth')->group(function(){
     Route::get("/checkout/{id_car}", [PesanController::class, "index"])->name("checkout");
     Route::get("/payment/{id_transaction}", [PesanController::class, "payment"])->name("payment");
     Route::get("/invoice/{id_transaction}", [InvoiceController::class, "InvoicePelanggan"])->name("invoice.pelanggan");
+    Route::get("/denda/{id_transaction}", [InvoiceController::class, "dendaPelanggan"])->name("denda.pelanggan");
 
     Route::get("produk-kami/detail/{id_car}", [ProdukController::class, "detail"])->name("detail.produk");
     Route::get("produk-kami/search", [SearchController::class, "search"])->name("search");

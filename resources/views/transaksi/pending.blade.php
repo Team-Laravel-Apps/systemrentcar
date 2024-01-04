@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -70,18 +69,28 @@
                                         <td>{{ $hari }} Hari</td>
                                         <td>@currency($data->biaya)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
-                                            <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
-                                                <i class="bi bi-check-lg"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-danger cancel" onclick="event.preventDefault(); document.getElementById('cancel-form');">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
+                                                <span class="tooltip-text">Bukti pembayaran</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                                <span class="tooltip-text">Lanjutkan Proses</span>
+                                            </div>
+                                            <div class="tooltip-container">
+                                                <button class="btn btn-sm btn-danger cancel" onclick="event.preventDefault(); document.getElementById('cancel-form');">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                                <span class="tooltip-text">Batalkan transaksi</span>
+                                            </div>
                                         </td>
                                         <form id="proses-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
                                             @csrf
                                             <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
                                             <input type="hidden" name="status" value="proses">
+                                            <input type="hidden" name="aksi" value="Memproses transaksi">
                                             <input type="hidden" name="is_complete" value="0">
                                         </form>
                                         <form id="cancel-form" action="{{ route('approvel.transaksi') }}" method="POST" class="d-none">
@@ -89,6 +98,7 @@
                                             <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
                                             <input type="hidden" name="id_transaction" value="{{ $data->id_transaction }}">
                                             <input type="hidden" name="status" value="batal">
+                                            <input type="hidden" name="aksi" value="Membatalkan transaksi">
                                             <input type="hidden" name="is_complete" value="0">
                                         </form>
                                     </tr>
@@ -171,10 +181,5 @@
             });
         });
     });
-
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
 </script>
-
 @endsection

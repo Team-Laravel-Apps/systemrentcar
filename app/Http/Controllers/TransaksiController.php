@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\Rental;
 use App\Models\Transaction;
+use App\Models\Cars;
 
 class TransaksiController extends Controller
 {
@@ -53,7 +54,6 @@ class TransaksiController extends Controller
             ->join('transactions', 'transactions.id_rental', '=', 'tbl_rental.id_rental')
             ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
             ->where('status_rental', 'selesai')
-            ->orWhere('status_rental', 'dikembalikan')
             ->get()
         ];
 
@@ -93,6 +93,14 @@ class TransaksiController extends Controller
 
     public function approvel(Request $request)
     {
+        if($request->aksi == 'Menyelesaikan transaksi')
+        {
+            $stok = Cars::select('unit')->where('id_car', $request->id_car)->first();
+            $aprovel = Cars::updateOrCreate(['id_car' => $request['id_car']], [
+                'unit' => $stok->unit - 1,
+            ]);
+        }
+
         $aprovel = Rental::updateOrCreate(['id_rental' => $request['id_rental']], [
             'status_rental' => $request->status,
         ]);
@@ -116,13 +124,54 @@ class TransaksiController extends Controller
 
         if($aprovel)
         {
-            Alert::success('Berhasil', $request->aksi);
+            Alert::success('Berhasil', $request->aksi.' berhasil dilakukan');
             return redirect()->back();
         }
     }
 
-    public function laporan()
+    public function diterima(Request $request)
     {
-        return view('transaksi.laporan');
+        $stok = Cars::select('unit')->where('id_car', $request->id_car)->first();
+        $diterima = Cars::updateOrCreate(['id_car' => $request['id_car']], [
+            'unit' => $stok->unit + 1,
+        ]);
+
+        $diterima = Rental::updateOrCreate(['id_rental' => $request['id_rental']], [
+            'status_rental' => $request->status,
+            'end_date'      => now(),
+        ]);
+
+        if($diterima)
+        {
+            Alert::success('Berhasil', 'Pengembalian kendaraan berhasil dilakukan');
+            return redirect()->back();
+        }
+    }
+
+    public function laporan(Request $request)
+    {
+        $query = Transaction::join('tbl_rental', 'tbl_rental.id_rental', '=', 'transactions.id_rental')
+            ->join('tbl_cars', 'tbl_cars.id_car', '=', 'tbl_rental.car_id')
+            ->join('users', 'users.id', '=', 'tbl_rental.id_pelanggan')
+            ->join('tbl_payment', 'tbl_payment.id_transaction', '=', 'transactions.id_transaction')
+            ->where('is_complete', 1);
+
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        if ($start_date && $end_date) {
+            $query->whereBetween('tbl_payment.payment_date', [$start_date, $end_date]);
+        } elseif ($start_date) {
+            $query->where('tbl_payment.payment_date', '>=', $start_date);
+        } elseif ($end_date) {
+            $query->where('tbl_payment.payment_date', '<=', $end_date);
+        }
+
+
+        $data = [
+            'transaksi' => $query->get(),
+        ];
+
+        return view('transaksi.laporan', $data);
     }
 }

@@ -198,5 +198,45 @@
             transform: translate(-50%,-50%);
             font: 14px arial;
         }
+
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            max-width: 200px; /* Set max-width to a suitable value */
+            white-space: normal; /* Allow text to wrap */
+            overflow-wrap: break-word; /* Allow long words to break and wrap */
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            align-items: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the text */
+            left: 50%;
+            transform: translateX(-50%); /* Center the tooltip above the text */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsiveness */
+        @media only screen and (max-width: 600px) {
+            .tooltip-text {
+                width: 100%;
+                margin-left: 0;
+                left: 0;
+                bottom: 100%;
+            }
+        }
     </style>
 </head>

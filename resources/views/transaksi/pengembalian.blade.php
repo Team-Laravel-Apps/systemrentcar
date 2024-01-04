@@ -38,7 +38,7 @@
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="dataTable" width="100%" style="font-size: 14px; table-layout: fixed;">
+                        <table class="table table-striped" id="dataTable" width="100%" style="font-size: 14px;">
                             <thead>
                                 <tr>
                                     <th>ID Transaksi</th>
@@ -48,6 +48,7 @@
                                     <th>Lama Sewa</th>
                                     <th>Denda</th>
                                     <th>Total Biaya</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -70,17 +71,29 @@
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->nama_kendaraan }}</td>
                                         <td>
-                                            @if($data->end_date < now())
-                                                <span class="badge badge-danger" style="font-size: 13px;">Expired {{ $expired }} hari</span>
+                                            @if($data->status_rental == 'dikembalikan')
+                                                {{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}
                                             @else
-                                                <span class="badge badge-primary" style="font-size: 13px;">{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</span>
+                                                @if($data->end_date < now())
+                                                    <span class="badge badge-danger" style="font-size: 13px;">Expired {{ $expired }} hari</span>
+                                                @else
+                                                    <span class="badge badge-primary" style="font-size: 13px;">{{ \Carbon\Carbon::parse($data->end_date)->isoFormat('LL') }}</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
-                                            @if($data->end_date < now())
-                                                {{ $extend }} Hari
+                                            @if($data->status_rental == 'dikembalikan')
+                                                @if($hari == 0)
+                                                    1 Hari
+                                                @else
+                                                    {{ $hari }} Hari
+                                                @endif
                                             @else
-                                                {{ $hari }} Hari
+                                                @if($data->end_date < now())
+                                                    {{ $extend }} Hari
+                                                @else
+                                                    {{ $hari }} Hari
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
@@ -88,28 +101,34 @@
                                         </td>
                                         <td>@currency($data->biaya + $denda)</td>
                                         <td>
-                                            <a class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#bukti{{ $data->id }}"><i class="bi bi-cash"></i></a>
-                                            <a class="btn btn-sm btn-primary" href="{{ route('invoice.print', $data->id_transaction) }}"><i class="bi bi-receipt-cutoff"></i></a>
+                                            @if($data->status_rental == 'dikembalikan')
+                                                <span class="badge badge-primary" style="font-size: 13px;">Diterima</span>
+                                            @else
+                                                <span class="badge badge-warning text-dark" style="font-size: 13px;">Rental</span>
+                                            @endif
                                         </td>
-                                    </tr>
-
-                                    <div class="modal fade" id="bukti{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran</h5>
-                                                    <button type="button" class="btn-close bg-close text-danger bg-transparent" style="border: none;" data-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ asset('drive/transfer/'. $data->payment_image) }}" alt="bukti transfer" class="img-fluid">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
+                                        <td>
+                                            @if($data->status_rental == 'selesai')
+                                            <div class="tooltip-container">
+                                                <button class="btn btn-sm btn-primary proses" onclick="event.preventDefault(); document.getElementById('proses-form');">
+                                                    <i class="bi bi-arrow-left-right"></i>
+                                                </button>
+                                                <span class="tooltip-text">Mobil diterima</span>
                                             </div>
-                                        </div>
-                                    </div>
+                                            @endif
+                                            <div class="tooltip-container">
+                                                <a class="btn btn-sm btn-warning text-dark" href="{{ route('denda.print', $data->id_transaction) }}"><i class="bi bi-currency-dollar"></i></a>
+                                                <span class="tooltip-text">Biaya denda</span>
+                                            </div>
+                                        </td>
+                                        <form id="proses-form" action="{{ route('diterima.transaksi') }}" method="POST" class="d-none">
+                                            @csrf
+                                            <input type="hidden" name="id_rental" value="{{ $data->id_rental }}">
+                                            <input type="hidden" name="id_car" value="{{ $data->id_car }}">
+                                            <input type="hidden" name="status" value="dikembalikan">
+                                            <input type="hidden" name="is_complete" value="1">
+                                        </form>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -123,24 +142,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    document.querySelectorAll('.delete-button').forEach(button => {
+    document.querySelectorAll('.proses').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
 
-            const nama = this.getAttribute('data-nama');
-            const deleteUrl = this.getAttribute('href');
+            const form = document.getElementById('proses-form');
+            const confirmationMessage = 'Ingin menyelesaikan proses ini';
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: `Anda akan menghapus users : ${nama}`,
-                icon: 'warning',
+                text: confirmationMessage,
+                icon: 'info',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!'
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Selesaikan!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = deleteUrl;
+                    // Submit the form using JavaScript
+                    form.submit();
                 }
             });
         });
